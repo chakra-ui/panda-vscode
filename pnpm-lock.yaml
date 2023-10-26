@@ -119,6 +119,10 @@ importers:
         version: 3.0.7
 
   packages/shared:
+    dependencies:
+      '@pandacss/shared':
+        specifier: ^0.17.0
+        version: 0.17.0
     devDependencies:
       tsup:
         specifier: 7.1.0
