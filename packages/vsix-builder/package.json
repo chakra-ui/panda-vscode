@@ -9,8 +9,8 @@
     "vsix-builder": "bin.js"
   },
   "repository": {
-    "url": "https://github.com/chakra-ui/panda",
-    "directory": "packages/extension/vsix-builder"
+    "url": "https://github.com/chakra-ui/panda-vscode",
+    "directory": "packages/vsix-builder"
   },
   "publishConfig": {
     "access": "public"

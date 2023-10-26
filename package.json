@@ -13,10 +13,7 @@
     "fmt": "prettier --write packages",
     "typecheck": "tsc --noEmit",
     "release": "changeset publish",
-    "release-dev": "changeset version --snapshot dev && changeset publish --tag dev",
-    "ext:build": "pnpm --filter=./extension/vscode build",
-    "ext:release": "pnpm --filter=./extension/vscode release",
-    "ext:prerelease": "pnpm --filter=./extension/vscode prerelease"
+    "release-dev": "changeset version --snapshot dev && changeset publish --tag dev"
   },
   "keywords": [],
   "author": "Segun Adebayo <joseshegs@gmail.com>",

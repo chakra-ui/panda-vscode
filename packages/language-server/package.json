@@ -5,8 +5,8 @@
   "version": "0.17.0",
   "main": "dist/index.js",
   "repository": {
-    "url": "https://github.com/chakra-ui/panda",
-    "directory": "packages/extension/language-server"
+    "url": "https://github.com/chakra-ui/panda-vscode",
+    "directory": "packages/language-server"
   },
   "scripts": {
     "build": "tsup src/index.ts --format cjs --minify -d dist --clean --shims --external esbuild --external @pandacss/preset-base --external @pandacss/preset-panda",

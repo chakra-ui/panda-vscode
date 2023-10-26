@@ -15,7 +15,7 @@ export const createVsix = async (
 ) => {
   const { manifest, dir } = await getManifest(target.dir)
   const fileNames = await packlist({ path: dir })
-  const files = fileNames.map((f) => ({ path: `extension/${f}`, localPath: join(target.dir, f) }))
+  const files = fileNames.map((f) => ({ path: `packages/${f}`, localPath: join(target.dir, f) }))
 
   const { outfile } = target
   if (target.dry) {
