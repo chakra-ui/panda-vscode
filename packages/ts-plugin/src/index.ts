@@ -75,6 +75,7 @@ function init(_modules: { typescript: typeof import('typescript/lib/tsserverlibr
 }
 
 // https://code.visualstudio.com/api/references/vscode-api#extensions
+// @ts-ignore
 export = init
 
 type ConfigEvent =
