@@ -9,7 +9,15 @@
       "name": "Run Extension",
       "type": "extensionHost",
       "request": "launch",
-      "args": ["--extensionDevelopmentPath=${workspaceFolder}/packages/vscode"],
+      "args": [
+        "--disable-updates",
+        "--disable-workspace-trust",
+        "--profile-temp",
+        "--skip-release-notes",
+        "--skip-welcome",
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/vscode",
+        "--folder-uri=${workspaceRoot}/sandbox/vite"
+      ],
       "outFiles": ["${workspaceFolder}/packages/vscode/dist/**/*.js"],
       "env": {
         "TSS_DEBUG": "9559"
