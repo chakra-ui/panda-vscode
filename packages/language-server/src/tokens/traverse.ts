@@ -26,7 +26,7 @@ export function traverse(
     if (isObjectOrArray(currentItem.value) && currentItem.depth < maxDepth) {
       const keys = Object.keys(currentItem.value)
       for (let i = keys.length - 1; i >= 0; i--) {
-        const key = keys[i]
+        const key = keys[i] as string
         const value = currentItem.value[key]
         const path = currentItem.path ? currentItem.path + separator + key : key
         stack.push({ value, path, depth: currentItem.depth + 1, parent: currentItem.value, key })
