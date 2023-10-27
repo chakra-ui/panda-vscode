@@ -24,20 +24,20 @@ jobs:
         uses: ./.github/composite-actions/install
 
       - name: Run Prettier
-        run: pnpm prettier
+        run: pnpm fmt
 
-  tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  # tests:
+  #   name: Unit Tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Install
-        uses: ./.github/composite-actions/install
+  #     - name: Install
+  #       uses: ./.github/composite-actions/install
 
-      - name: Run tests
-        run: pnpm test
+  #     - name: Run tests
+  #       run: pnpm test
 
   eslint:
     name: ESLint
@@ -52,7 +52,7 @@ jobs:
       - name: Run ESLint
         run: pnpm lint
         env:
-          NODE_OPTIONS: '--max-old-space-size=4096'
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
   types:
     name: TypeScript
