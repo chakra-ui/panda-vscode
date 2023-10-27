@@ -11,6 +11,7 @@ import {
 } from '@pandacss/types'
 import { CallExpression, Identifier, JsxOpeningElement, JsxSelfClosingElement, Node, SourceFile, ts } from 'ts-morph'
 
+import { type PandaVSCodeSettings } from '@pandacss/extension-shared'
 import {
   BoxNodeArray,
   BoxNodeLiteral,
@@ -28,15 +29,17 @@ import {
   type Unboxed,
 } from '@pandacss/extractor'
 import { type PandaContext } from '@pandacss/node'
-import { walkObject } from '@pandacss/shared'
 import { type ParserResult } from '@pandacss/parser'
+import { walkObject } from '@pandacss/shared'
 import { type Token } from '@pandacss/token-dictionary'
 import { Bool } from 'lil-fp'
-import { type PandaVSCodeSettings } from '@pandacss/extension-shared'
 import { match } from 'ts-pattern'
 import { color2kToVsCodeColor } from './color2k-to-vscode-color'
 import { expandTokenFn, extractTokenPaths } from './expand-token-fn'
 import { isColor } from './is-color'
+import { makeColorTile, makeTable } from './metadata'
+import { getSortText } from './sort-text'
+import { traverse } from './traverse'
 import { getMarkdownCss, isObjectLike, nodeRangeToVsCodeRange, printTokenValue } from './utils'
 
 type ClosestMatch = {
@@ -48,12 +51,14 @@ type ClosestTokenMatch = ClosestMatch & {
   kind: 'token'
   token: Token
   propValue: PrimitiveType
+  shorthand: string
 }
 
 type ClosestConditionMatch = ClosestMatch & {
   kind: 'condition'
   condition: RawCondition
   propValue: Unboxed['raw']
+  shorthand: never
 }
 type ClosestToken = ClosestTokenMatch | ClosestConditionMatch
 
@@ -165,14 +170,14 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
           const propNode = box.isArray(boxNode)
             ? boxNode.value.find((node) => box.isMap(node) && getNestedBoxProp(node, paths))
             : getNestedBoxProp(boxNode, paths)
-          if (!box.isLiteral(propNode)) return
+          if (!box.isLiteral(propNode) || !prop) return
 
           const propName = ctx.utility.resolveShorthand(prop)
           const token = getTokenFromPropValue(ctx, propName, value)
           if (!token) return
 
           const range = nodeRangeToVsCodeRange(propNode.getRange())
-          onToken?.({ kind: 'token', token, range, propName, propValue: value, propNode })
+          onToken?.({ kind: 'token', token, range, propName, propValue: value, propNode, shorthand: prop })
         })
       })
     }
@@ -296,7 +301,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
   const findClosestToken = <Return>(
     node: Node,
     stack: Node[],
-    onFoundToken: (args: Pick<ClosestToken, 'propName' | 'propNode'>) => Return,
+    onFoundToken: (args: Pick<ClosestToken, 'propName' | 'propNode' | 'shorthand'>) => Return,
   ) => {
     const ctx = setup.getContext()
     if (!ctx) return
@@ -317,7 +322,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
 
           const propName = ctx.utility.resolveShorthand(name)
 
-          return onFoundToken({ propName, propNode })
+          return onFoundToken({ propName, propNode, shorthand: name })
         },
       )
       .when(
@@ -333,7 +338,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
 
           const propName = ctx.utility.resolveShorthand(name)
 
-          return onFoundToken({ propName, propNode: attrBox })
+          return onFoundToken({ propName, propNode: attrBox, shorthand: name })
         },
       )
       .otherwise(() => {
@@ -411,10 +416,71 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
     const settings = await setup.getPandaSettings()
     const { node, stack } = match
 
-    return findClosestToken(node, stack, ({ propName, propNode }) => {
-      if (!box.isLiteral(propNode)) return undefined
-      return getCompletionFor(ctx, propName, propNode, settings)
-    })
+    try {
+      return await findClosestToken(node, stack, ({ propName, propNode, shorthand }) => {
+        if (!box.isLiteral(propNode)) return undefined
+        return getCompletionFor({ ctx, propName, propNode, settings, shorthand })
+      })
+    } catch (err) {
+      console.error(err)
+      console.trace()
+      return
+    }
+  }
+
+  const getCompletionDetails = async (item: CompletionItem) => {
+    const ctx = setup.getContext()
+    if (!ctx) return
+
+    const settings = await setup.getPandaSettings()
+    const { propName, token, shorthand } = (item.data ?? {}) as { propName: string; token: Token; shorthand: string }
+    const markdownCss = getMarkdownCss(ctx, { [propName]: token.value }, settings)
+
+    const markdown = [markdownCss.withCss]
+    if (shorthand !== propName) {
+      markdown.push(`\`${shorthand}\` is shorthand for \`${propName}\``)
+    }
+
+    const conditions = token.extensions.conditions ?? { base: token.value }
+    if (conditions) {
+      const separator = '[___]'
+      const table = [{ color: ' ', theme: 'Condition', value: 'Value' }]
+
+      const tab = '&nbsp;&nbsp;&nbsp;&nbsp;'
+      traverse(
+        conditions,
+        ({ key: cond, value, depth }) => {
+          if (!ctx.conditions.get(cond) && cond !== 'base') return
+
+          const indent = depth > 0 ? tab.repeat(depth) + '├ ' : ''
+
+          if (typeof value === 'object') {
+            table.push({
+              color: '',
+              theme: `${indent}**${cond}**`,
+              value: '─────',
+            })
+            return
+          }
+
+          const [tokenRef] = ctx.tokens.getReferences(value)
+          const color = tokenRef?.value ?? value
+          if (!color) return
+
+          table.push({
+            color: makeColorTile(color),
+            theme: `${indent}**${cond}**`,
+            value: `\`${color}\``,
+          })
+        },
+        { separator },
+      )
+
+      markdown.push(makeTable(table))
+      markdown.push(`\n${tab}`)
+    }
+
+    item.documentation = { kind: 'markdown', value: markdown.join('\n') }
   }
 
   return {
@@ -425,6 +491,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
     getClosestToken,
     getClosestInstance,
     getClosestCompletionList,
+    getCompletionDetails,
   }
 }
 
@@ -516,15 +583,19 @@ const getTokenFromPropValue = (ctx: PandaContext, prop: string, value: string): 
   return token
 }
 
-const completionCache = new Map<string, CompletionItem[]>()
-const itemCache = new Map<string, CompletionItem>()
-
-const getCompletionFor = (
-  ctx: PandaContext,
-  propName: string,
-  propNode: BoxNodeLiteral,
-  settings: PandaVSCodeSettings,
-) => {
+const getCompletionFor = ({
+  ctx,
+  propName,
+  shorthand,
+  propNode,
+  settings,
+}: {
+  ctx: PandaContext
+  propName: string
+  shorthand?: string
+  propNode: BoxNodeLiteral
+  settings: PandaVSCodeSettings
+}) => {
   const propValue = propNode.value
 
   let str = String(propValue)
@@ -552,10 +623,6 @@ const getCompletionFor = (
     category = split[0]
   }
 
-  const cachePath = propName + '.' + str
-  const cachedList = completionCache.get(cachePath)
-  if (cachedList) return cachedList
-
   // token(colors.red.300) -> category = "colors"
   // color="red.300" -> no category, need to find it
   if (!category) {
@@ -574,21 +641,15 @@ const getCompletionFor = (
   values.forEach((token, name) => {
     if (str && !name.includes(str)) return
 
-    const tokenPath = token.name
-    const cachedItem = itemCache.get(tokenPath)
-    if (cachedItem) {
-      items.push(cachedItem)
-      return
-    }
-
     const isColor = token.extensions.category === 'colors'
+
     const completionItem = {
+      data: { propName, token, shorthand },
       label: name,
       kind: isColor ? CompletionItemKind.Color : CompletionItemKind.EnumMember,
-      documentation: { kind: 'markdown', value: getMarkdownCss(ctx, { [propName]: token.value }, settings).withCss },
       labelDetails: { description: printTokenValue(token, settings), detail: `   ${token.extensions.varRef}` },
-      sortText: '-' + name,
-      preselect: true,
+      sortText: '-' + getSortText(name),
+      preselect: false,
     } as CompletionItem
 
     if (isColor) {
@@ -597,10 +658,8 @@ const getCompletionFor = (
     }
 
     items.push(completionItem)
-    itemCache.set(tokenPath, completionItem)
   })
 
-  completionCache.set(cachePath, items)
   return items
 }
 
@@ -611,6 +670,6 @@ const getFirstAncestorMatching = <Ancestor extends Node>(
 ) => {
   for (let i = stack.length - 1; i >= 0; i--) {
     const parent = stack[i]
-    if (callback(parent, i)) return parent
+    if (parent && callback(parent, i)) return parent
   }
 }

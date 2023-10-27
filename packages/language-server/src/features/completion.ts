@@ -3,7 +3,8 @@ import type { PandaExtension } from '../index'
 import { onError } from '../tokens/error'
 
 export function registerCompletion(extension: PandaExtension) {
-  const { connection, documents, documentReady, getClosestCompletionList, getPandaSettings } = extension
+  const { connection, documents, documentReady, getClosestCompletionList, getCompletionDetails, getPandaSettings } =
+    extension
 
   // This handler provides the initial list of the completion items.
   connection.onCompletion(
@@ -29,5 +30,8 @@ export function registerCompletion(extension: PandaExtension) {
   )
 
   // This handler resolves additional information for the item selected in the completion list.
-  connection.onCompletionResolve((item) => item)
+  connection.onCompletionResolve(async (item) => {
+    await getCompletionDetails(item)
+    return item
+  })
 }

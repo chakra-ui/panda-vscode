@@ -36,8 +36,11 @@ export function registerColorHints(extension: PandaExtension) {
         // Add 1 color hint for each condition
         if (match.token.extensions.conditions) {
           if (settings['color-hints.semantic-tokens.enabled']) {
-            Object.values(match.token.extensions.conditions).forEach((value) => {
+            Object.entries(match.token.extensions.conditions).forEach(([cond, value]) => {
+              if (!ctx.conditions.get(cond) && cond !== 'base') return
               const [tokenRef] = ctx.tokens.getReferences(value)
+              if (!tokenRef) return
+
               const color = color2kToVsCodeColor(tokenRef.value)
               if (!color) return
 

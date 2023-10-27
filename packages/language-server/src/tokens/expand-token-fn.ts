@@ -7,7 +7,8 @@ const matchToken = (str: string, callback: (tokenPath: string, match: RegExpExec
   let match: RegExpExecArray | null
 
   while ((match = tokenRegex.exec(str)) != null) {
-    match[1]
+    // eslint-disable-next-line no-extra-semi
+    ;(match[1] ?? '')
       .split(',')
       .map((s) => s.trim())
       .filter(Boolean)

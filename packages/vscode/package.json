@@ -200,7 +200,7 @@
     "build:ts-plugin": "pnpm --filter=../ts-plugin build",
     "build:all": "pnpm build:shared && pnpm build:lsp && pnpm build:ts-plugin",
     "build": "tsup",
-    "dev": "tsup --watch src/index.ts --watch ../language-server/dist/index.js --watch ../shared/dist/index.js",
+    "dev": "tsup --watch src/index.ts --watch ../language-server/dist/index.js --watch ../shared/dist/index.js --watch ../ts-plugin/dist/index.js",
     "clean": "rimraf dist node_modules",
     "typecheck": "tsc --noEmit",
     "rewrite-deps": "tsx ./scripts/rewrite-workspace-dependencies.ts",

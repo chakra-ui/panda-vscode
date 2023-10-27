@@ -190,10 +190,10 @@ export const isColor = (str: string) => {
   if (result) {
     const flavor = result[1]
     const alpha = result[2]
-    const rh = result[3]
-    const gs = result[4]
-    const bl = result[5]
-    const a = result[6]
+    const rh = result[3] ?? ''
+    const gs = result[4] ?? ''
+    const bl = result[5] ?? ''
+    const a = result[6] ?? ''
 
     // alpha test
     if ((alpha === 'a' && !a) || (a && alpha === '')) {

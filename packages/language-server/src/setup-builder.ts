@@ -75,7 +75,7 @@ export function setupBuilder(
     )
     console.log('🐼 Workspaces builders ready !')
 
-    if (configPathList.length === 1) {
+    if (configPathList.length === 1 && configPathList[0]) {
       return builderResolver.isContextSynchronizing(configPathList[0])
     }
   }

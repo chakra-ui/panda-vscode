@@ -6,13 +6,16 @@ import { svgToMarkdownLink } from './utils'
 import { Roboto } from './render-font-size-preview'
 
 // https://og-playground.vercel.app/?share=5ZTNTsMwDMdfJbLELdI2xHYIgwMfb4DEJZe2cdtAmlRJSqmqvjtNw8ZEGUzihMglsRP_9bMtp4fMCAQGWyFfuCbE-U7hVd-HMyElyqL0jHBYLZdnHGh0t1L4cuYV0tUq6YI_V_i69wfjTlrMvDQ63GZGNZXmEK6HgevrcNgBfEY4rhuVGVm920GKkEnsUG4uGANvEifdR3RYldSPu9TWB5l9U4o5Rlhpkj0X1jRa3BplbIgqLOKY8_5RpCVk8RvgL6BOy-Yk5FQ1eJR4uxiB_0XnOlTKtH-rdRbFj52L-yXXQMHUYTgdsB6m4QZ2vt5QiJDANhcUBKZNASxPlEMKWJkn-dDV4e_w7WSNMrnR_r5KUQDztsGBgk_S8UU5ldBYJWB4Aw
+// TODO use raw svg ? or precompile and just replace the color
 export const renderTokenColorPreview = async (ctx: PandaContext, token: Token) => {
   const colors = [] as [tokenName: string, value: string][]
 
   // Only bother displaying a preview for multiple colors
   if (token.extensions.conditions) {
     Object.entries(token.extensions.conditions).forEach(([conditionName, value]) => {
+      if (!ctx.conditions.get(conditionName) && conditionName !== 'base') return
       const [tokenRef] = ctx.tokens.getReferences(value)
+      if (!tokenRef) return
 
       colors.push([conditionName, tokenRef.value])
     })

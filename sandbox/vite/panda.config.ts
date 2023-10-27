@@ -15,14 +15,30 @@ export default defineConfig({
     extend: {
       semanticTokens: {
         colors: {
-          app: {
-            background: { value: '#fef08a' },
-            foreground: { value: '{colors.yellow.300}' },
+          danger: {
+            value: { base: '{colors.red.300}', _dark: '{colors.orange.300}' },
+          },
+          success: {
+            value: { base: '{colors.green.300}', _dark: '{colors.lime.400}' },
+          },
+          bg: {
+            DEFAULT: { value: '{colors.yellow.100}' },
+            muted: { value: '{colors.gray.100}' },
             text: {
               value: {
-                _base: '{colors.blue.100}',
+                base: '{colors.blue.100}',
                 _light: '{colors.blue.200}',
                 _dark: '{colors.blue.300}',
+                md: {
+                  base: '{colors.blue.900}',
+                  _focus: '{colors.blue.400}',
+                  _active: '{colors.blue.500}',
+                  _hover: {
+                    base: '{colors.blue.600}',
+                    _light: '{colors.blue.700}',
+                    _dark: '{colors.blue.800}',
+                  }
+                }
               },
             },
           },

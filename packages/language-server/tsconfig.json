@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "include": ["src", "index.ts"],
   "compilerOptions": {
+    "declaration": false,
     "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
   }
 }

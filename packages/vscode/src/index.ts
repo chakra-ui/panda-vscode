@@ -110,11 +110,12 @@ export async function activate(context: vscode.ExtensionContext) {
         }
 
         const colors = (await next(document, token)) ?? []
-        vscode.window.visibleTextEditors
-          .find((editor) => editor.document === document)
-          ?.setDecorations(
+        const editor = vscode.window.visibleTextEditors.find((editor) => editor.document === document)
+
+        editor?.setDecorations(
             colorDecorationType,
-            colors.map(({ range, color }) => ({
+          colors.map(({ range, color }) => {
+            return {
               range,
               renderOptions: {
                 before: {
@@ -123,9 +124,9 @@ export async function activate(context: vscode.ExtensionContext) {
                   })`,
                 },
               },
-            })),
+            }
+          }),
           )
-
         return []
       },
     },
@@ -144,6 +145,7 @@ export async function activate(context: vscode.ExtensionContext) {
     showNotification?: boolean,
   ) => {
     console.log('handleFailedRequest', { type, token, error, defaultValue, showNotification })
+    console.trace()
     return defaultValue
   }
   client.onNotification('$/clear-colors', clearColors)
