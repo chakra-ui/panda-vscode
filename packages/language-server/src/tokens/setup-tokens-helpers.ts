@@ -419,7 +419,6 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
     try {
       return await findClosestToken(node, stack, ({ propName, propNode, shorthand }) => {
         if (!box.isLiteral(propNode)) return undefined
-        console.log({ propNode, shorthand })
         return getCompletionFor({ ctx, propName, propNode, settings, shorthand })
       })
     } catch (err) {
@@ -434,7 +433,8 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
     if (!ctx) return
 
     const settings = await setup.getPandaSettings()
-    const { propName, token, shorthand } = (item.data ?? {}) as { propName: string; token: Token; shorthand: string }
+    const { propName, token, shorthand } = (item.data ?? {}) as { propName: string; token?: Token; shorthand: string }
+    if (!token) return
     const markdownCss = getMarkdownCss(ctx, { [propName]: token.value }, settings)
 
     const markdown = [markdownCss.withCss]
@@ -662,8 +662,11 @@ const getCompletionFor = ({
       // margin: "2" -> ['var(--spacing-2)', 'var(--spacing-12)', 'var(--spacing-20)', ...]
       if (str && !name.includes(str)) return
 
+      const tokenPath = matchVar(value ?? '')?.replace('-', '.')
+      const token = tokenPath && ctx.tokens.getByName(tokenPath)
+
       items.push({
-        data: { propName, token: getTokenFromPropValue(ctx, propName, value), shorthand },
+        data: { propName, token, shorthand },
         label: name,
         kind: CompletionItemKind.EnumMember,
         sortText: '-' + getSortText(name),
@@ -714,4 +717,10 @@ const getFirstAncestorMatching = <Ancestor extends Node>(
     const parent = stack[i]
     if (parent && callback(parent, i)) return parent
   }
+}
+
+const regex = /var\(--([\w-.]+)\)/g
+const matchVar = (str: string) => {
+  const match = regex.exec(str)
+  return match ? match[1] : null
 }
