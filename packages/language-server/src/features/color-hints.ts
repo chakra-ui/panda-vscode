@@ -33,7 +33,7 @@ export function registerColorHints(extension: PandaExtension) {
         const isColor = match.kind === 'token' && match.token.extensions?.vscodeColor
         if (!isColor) return
 
-        // Add 1 color hint for each condition
+        // Add 1 color hint for each root condition
         if (match.token.extensions.conditions) {
           if (settings['color-hints.semantic-tokens.enabled']) {
             Object.entries(match.token.extensions.conditions).forEach(([cond, value]) => {
