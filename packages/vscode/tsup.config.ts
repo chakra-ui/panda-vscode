@@ -5,7 +5,7 @@ export default defineConfig({
   watch: ['../language-server/src/**/*', '../ts-plugin/src/**/*', '../shared/src/**/*'],
   format: ['cjs'],
   external: ['vscode', 'esbuild'],
-  minify: false,
+  minify: true,
   outDir: 'dist',
   clean: true,
   shims: true,

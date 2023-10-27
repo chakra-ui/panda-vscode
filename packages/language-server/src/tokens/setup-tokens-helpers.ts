@@ -419,6 +419,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
     try {
       return await findClosestToken(node, stack, ({ propName, propNode, shorthand }) => {
         if (!box.isLiteral(propNode)) return undefined
+        console.log({ propNode, shorthand })
         return getCompletionFor({ ctx, propName, propNode, settings, shorthand })
       })
     } catch (err) {
@@ -636,20 +637,50 @@ const getCompletionFor = ({
 
   // token(colors.red.300) -> category = "colors"
   // color="red.300" -> no category, need to find it
+  let propValues: Record<string, string> | undefined
   if (!category) {
     const utility = ctx.config.utilities?.[propName]
-    if (typeof utility?.values === 'string' && utility?.values) {
+    if (!utility?.values) return
+
+    // values: "spacing"
+    if (typeof utility?.values === 'string') {
       category = utility.values
+    } else if (typeof utility.values === 'function') {
+      // values: (theme) => { ...theme("spacing") }
+      const record = ctx.utility.getPropertyValues(utility)
+      if (record) {
+        if (record.type) category = record.type
+        else propValues = record
+      }
     }
+  }
+
+  // values: { "1": "1px", "2": "2px", ... }
+  if (propValues) {
+    const items = [] as CompletionItem[]
+    Object.entries(propValues).map(([name, value]) => {
+      // margin: "2" -> ['var(--spacing-2)', 'var(--spacing-12)', 'var(--spacing-20)', ...]
+      if (str && !name.includes(str)) return
+
+      items.push({
+        data: { propName, token: getTokenFromPropValue(ctx, propName, value), shorthand },
+        label: name,
+        kind: CompletionItemKind.EnumMember,
+        sortText: '-' + getSortText(name),
+        preselect: false,
+      })
+    })
+
+    return items
   }
 
   if (!category) return []
 
-  const values = ctx.tokens.categoryMap.get(category)
-  if (!values) return []
+  const categoryValues = ctx.tokens.categoryMap.get(category!)
+  if (!categoryValues) return []
 
   const items = [] as CompletionItem[]
-  values.forEach((token, name) => {
+  categoryValues.forEach((token, name) => {
     if (str && !name.includes(str)) return
 
     const isColor = token.extensions.category === 'colors'

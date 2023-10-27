@@ -113,7 +113,7 @@ export async function activate(context: vscode.ExtensionContext) {
         const editor = vscode.window.visibleTextEditors.find((editor) => editor.document === document)
 
         editor?.setDecorations(
-            colorDecorationType,
+          colorDecorationType,
           colors.map(({ range, color }) => {
             return {
               range,
@@ -126,7 +126,7 @@ export async function activate(context: vscode.ExtensionContext) {
               },
             }
           }),
-          )
+        )
         return []
       },
     },
@@ -166,7 +166,8 @@ export async function activate(context: vscode.ExtensionContext) {
   // synchronize the extension settings with the TS server plugin
   // so that we can disable removing built-ins from the completion list if the user has disabled completions in the settings
   context.subscriptions.push(
-    vscode.workspace.onDidChangeConfiguration(() => {
+    vscode.workspace.onDidChangeConfiguration((update) => {
+      debug && console.log('onDidChangeConfiguration', update)
       if (!tsApi) return
 
       const settings = getFreshPandaSettings()
