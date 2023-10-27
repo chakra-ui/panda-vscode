@@ -48,6 +48,8 @@ export function setupBuilder(
     const ctx = builder.context
     if (!ctx) return
 
+    console.log('🐼 Context reloaded for:', configPath)
+    ref.context = ctx
     const tokenNames = Array.from(new Set(ctx.tokens.allTokens.map((token) => token.path.slice(1).join('.'))))
     connection.sendNotification('$/panda-token-names', { configPath, tokenNames })
   })
@@ -100,6 +102,7 @@ export function setupBuilder(
     const builder = builderResolver.get(filepath)
     if (!builder || !builder.context) return
 
+    console.log('🐼 Context loaded for:', filepath)
     ref.context = builder.context
 
     return ref.context
@@ -111,6 +114,7 @@ export function setupBuilder(
     const builder = builderResolver.get(filepath)
     if (!builder || !builder.context) return
 
+    console.log('🐼 Found panda context! ✅ at', filepath)
     ref.context = builder.context
 
     return ref.context
