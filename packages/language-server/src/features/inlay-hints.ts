@@ -1,44 +1,34 @@
 import { InlayHint, InlayHintKind, type InlayHintParams } from 'vscode-languageserver'
-import { type PandaExtension } from '..'
 import { printTokenValue } from '../tokens/utils'
 import { tryCatch } from 'lil-fp/func'
 import { onError } from '../tokens/error'
+import type { PandaLanguageServer } from '../panda-language-server'
 
-export function registerInlayHints(context: PandaExtension) {
-  const {
-    connection,
-    documents,
-    documentReady,
-    loadPandaContext,
-    getContext,
-    parseSourceFile,
-    getFileTokens,
-    getPandaSettings,
-  } = context
-
-  connection.languages.inlayHint.on(
+export function registerInlayHints(lsp: PandaLanguageServer) {
+  lsp.log('🐼 Registering inlay hints')
+  lsp.connection.languages.inlayHint.on(
     tryCatch(async (params: InlayHintParams) => {
-      const settings = await getPandaSettings()
+      const settings = await lsp.getPandaSettings()
       if (!settings['inlay-hints.enabled']) return
 
-      await documentReady('🐼 inlay hints')
+      await lsp.isReady('🐼 inlay hints')
 
       // await when the server starts, then just get the context
-      if (!getContext()) {
-        await loadPandaContext(params.textDocument.uri)
+      if (!lsp.getContext()) {
+        await lsp.loadPandaContext(params.textDocument.uri)
       }
 
-      const doc = documents.get(params.textDocument.uri)
+      const doc = lsp.documents.get(params.textDocument.uri)
       if (!doc) {
         return []
       }
 
-      const parserResult = parseSourceFile(doc)
+      const parserResult = lsp.project.parseSourceFile(doc)
       if (!parserResult) return
 
       const inlayHints = [] as InlayHint[]
 
-      getFileTokens(doc, parserResult, (match) => {
+      lsp.tokenFinder.getFileTokens(doc, parserResult, (match) => {
         if (
           match.kind === 'token' &&
           match.token.extensions.kind !== 'color' &&

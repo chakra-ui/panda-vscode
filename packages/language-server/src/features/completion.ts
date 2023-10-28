@@ -1,26 +1,24 @@
 import { tryCatch } from 'lil-fp/func'
-import type { PandaExtension } from '../index'
 import { onError } from '../tokens/error'
+import type { PandaLanguageServer } from '../panda-language-server'
 
-export function registerCompletion(extension: PandaExtension) {
-  const { connection, documents, documentReady, getClosestCompletionList, getCompletionDetails, getPandaSettings } =
-    extension
-
+export function registerCompletion(lsp: PandaLanguageServer) {
+  lsp.log('🐼 Registering completion')
   // This handler provides the initial list of the completion items.
-  connection.onCompletion(
+  lsp.connection.onCompletion(
     tryCatch(async (params) => {
-      const isEnabled = await getPandaSettings('completions.enabled')
+      const isEnabled = await lsp.getPandaSettings('completions.enabled')
       if (!isEnabled) return
 
-      await documentReady('✅ onCompletion')
+      await lsp.isReady('✅ onCompletion')
 
-      const doc = documents.get(params.textDocument.uri)
+      const doc = lsp.documents.get(params.textDocument.uri)
       if (!doc) {
         return
       }
 
       // TODO recipe
-      const matches = await getClosestCompletionList(doc, params.position)
+      const matches = await lsp.completions.getClosestCompletionList(doc, params.position)
       if (!matches?.length) {
         return
       }
@@ -30,8 +28,8 @@ export function registerCompletion(extension: PandaExtension) {
   )
 
   // This handler resolves additional information for the item selected in the completion list.
-  connection.onCompletionResolve(async (item) => {
-    await getCompletionDetails(item)
+  lsp.connection.onCompletionResolve(async (item) => {
+    await lsp.completions.getCompletionDetails(item)
     return item
   })
 }

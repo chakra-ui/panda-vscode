@@ -80,6 +80,7 @@ export class PandaExtension {
       },
       initializationOptions: () => {
         return {
+          settings: getFreshPandaSettings(),
           activeDocumentFilepath: activeDocument?.uri.fsPath,
         }
       },
@@ -115,8 +116,6 @@ export class PandaExtension {
       this.log('connected to TS plugin !')
     } catch (err) {
       this.log('error loading TS', err)
-    } finally {
-      console.log(123)
     }
   }
 

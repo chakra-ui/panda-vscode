@@ -6,7 +6,7 @@ function App() {
     <>
       <div
         className={css({
-          color: 'amber.400',
+          color: "blue",
           outlineColor: 'bg',
           backgroundColor: 'bg.text',
           bgColor: 'bg',

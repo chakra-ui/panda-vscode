@@ -1,35 +1,34 @@
 import { ColorInformation } from 'vscode-languageserver'
-import type { PandaExtension } from '../index'
 import { color2kToVsCodeColor } from '../tokens/color2k-to-vscode-color'
 import { tryCatch } from 'lil-fp/func'
 import { onError } from '../tokens/error'
+import type { PandaLanguageServer } from '../panda-language-server'
 
-export function registerColorHints(extension: PandaExtension) {
-  const { connection, documents, documentReady, parseSourceFile, getFileTokens, getPandaSettings } = extension
-
-  connection.onDocumentColor(
+export function registerColorHints(lsp: PandaLanguageServer) {
+  lsp.log('🐼 Registering color hints')
+  lsp.connection.onDocumentColor(
     tryCatch(async (params) => {
-      const settings = await getPandaSettings()
+      const settings = await lsp.getPandaSettings()
       if (!settings['color-hints.enabled']) return
 
-      await documentReady('🐼 onDocumentColor')
+      await lsp.isReady('🐼 onDocumentColor')
 
-      const doc = documents.get(params.textDocument.uri)
+      const doc = lsp.documents.get(params.textDocument.uri)
       if (!doc) {
         return []
       }
 
-      const ctx = extension.getContext()
+      const ctx = lsp.getContext()
       if (!ctx) return []
 
-      const parserResult = parseSourceFile(doc)
+      const parserResult = lsp.project.parseSourceFile(doc)
       if (!parserResult) {
         return []
       }
 
       const colors: ColorInformation[] = []
 
-      getFileTokens(doc, parserResult, (match) => {
+      lsp.tokenFinder.getFileTokens(doc, parserResult, (match) => {
         const isColor = match.kind === 'token' && match.token.extensions?.vscodeColor
         if (!isColor) return
 
@@ -61,11 +60,7 @@ export function registerColorHints(extension: PandaExtension) {
     }, onError),
   )
 
-  connection.onColorPresentation(() => {
+  lsp.connection.onColorPresentation(() => {
     return []
-  })
-
-  connection.onDidChangeConfiguration(async (_change) => {
-    connection.sendNotification('$/clear-colors')
   })
 }

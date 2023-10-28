@@ -11,7 +11,7 @@ const TRIGGER_CHARACTERS = [
   '.',
 ]
 
-export const serverCapabilities: ServerCapabilities = {
+export const getDefaultCapabilities = (): ServerCapabilities => ({
   textDocumentSync: TextDocumentSyncKind.Incremental,
   inlayHintProvider: {
     resolveProvider: false,
@@ -36,4 +36,4 @@ export const serverCapabilities: ServerCapabilities = {
   hoverProvider: true,
   colorProvider: true,
   inlineValueProvider: true,
-}
+})

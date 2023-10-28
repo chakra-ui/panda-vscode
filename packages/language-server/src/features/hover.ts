@@ -1,31 +1,30 @@
-import { type PandaExtension } from '../index'
 import { getMarkdownCss, nodeRangeToVsCodeRange, printTokenValue } from '../tokens/utils'
 import { renderTokenColorPreview } from '../tokens/render-token-color-preview'
 import { generateKeyframeCss } from '../tokens/generate-keyframe-css'
 import { tryCatch } from 'lil-fp/func'
 import { onError } from '../tokens/error'
+import type { PandaLanguageServer } from '../panda-language-server'
 
-export function registerHover(extension: PandaExtension) {
-  const { connection, documentReady, documents, getClosestToken, getClosestInstance, getPandaSettings } = extension
-
-  connection.onHover(
+export function registerHover(lsp: PandaLanguageServer) {
+  lsp.log('🐼 Registering hover')
+  lsp.connection.onHover(
     tryCatch(async (params) => {
-      const settings = await getPandaSettings()
+      const settings = await lsp.getPandaSettings()
       if (!settings['hovers.enabled']) return
 
-      await documentReady('🐼 onHover')
+      await lsp.isReady('🐼 onHover')
 
-      const ctx = extension.getContext()
+      const ctx = lsp.getContext()
       if (!ctx) return
 
-      const doc = documents.get(params.textDocument.uri)
+      const doc = lsp.documents.get(params.textDocument.uri)
       if (!doc) {
         return
       }
 
       if (settings['hovers.tokens.enabled']) {
         // TODO recipe
-        const tokenMatch = getClosestToken(doc, params.position)
+        const tokenMatch = lsp.tokenFinder.getClosestToken(doc, params.position)
         if (tokenMatch) {
           if (tokenMatch.kind === 'token') {
             const { token } = tokenMatch
@@ -68,7 +67,7 @@ export function registerHover(extension: PandaExtension) {
       }
 
       if (settings['hovers.instances.enabled']) {
-        const instanceMatch = getClosestInstance(doc, params.position)
+        const instanceMatch = lsp.tokenFinder.getClosestInstance(doc, params.position)
         if (instanceMatch && instanceMatch.kind === 'styles') {
           const range = nodeRangeToVsCodeRange(instanceMatch.props.getRange())
           return { contents: getMarkdownCss(ctx, instanceMatch.styles, settings).withCss, range }
