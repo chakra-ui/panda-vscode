@@ -5,9 +5,10 @@ on:
     paths:
       - ".changeset/**"
       - "packages/**"
-      - "extension/**"
+      - ".github/workflows/release.yml"
     branches:
       - main
+      - ci/release
 
 jobs:
   release:
@@ -23,13 +24,13 @@ jobs:
         uses: ./.github/composite-actions/install
 
       - name: Build packages
-        run: pnpm build
+        run: yarn build
 
       - name: Publish packages
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm release
+          publish: yarn release
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -38,8 +39,8 @@ jobs:
         if: steps.changesets.outputs.published != 'true'
         run: |
           git checkout main
-          pnpm changeset version --snapshot dev
-          pnpm changeset publish --tag dev
+          yarn changeset version --snapshot dev
+          yarn changeset publish --tag dev
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -101,35 +102,27 @@ jobs:
         uses: ./.github/composite-actions/install
 
       - name: Build packages
-        run: pnpm build
+        run: yarn build
 
       - name: Set Environment Variable
         run: echo "VSCE_RELEASE_VERSION=$(date +'%s' | cut -c1-8)" >> $GITHUB_ENV
 
-      - name: Prepare npm install
-        working-directory: ./extension/vscode
-        run: pnpm rewrite-deps && pnpm clean
-
-      - name: Overrides esbuild
-        working-directory: ./extension/vscode
-        if: contains(matrix.target, 'darwin-arm64')
-        run: pnpm override-esbuild
-
-      - name: Install with npm
-        working-directory: ./extension/vscode
+      - name: Publish RC
+        if: steps.changesets.outputs.published != 'true'
+        working-directory: ./packages/vscode
         run: |
-          npm i --ignore-scripts
+          yarn release
         env:
-          npm_config_arch: ${{ matrix.npm_config_arch }}
+          VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
+          VSCE_RELEASE_VERSION: ${{ needs.create_timestamp.outputs.timestamp }}
+          VSCE_RELEASE_TYPE: rc
+          VSCE_TARGET: ${{ matrix.target }}
 
       - name: Publish extension
         if: steps.changesets.outputs.published == 'true'
-        working-directory: ./extension/vscode
+        working-directory: ./packages/vscode
         run: |
-          pnpm rewrite-deps
-          pnpm clean
-          npm i
-          pnpm release
+          yarn release
         env:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
           VSCE_RELEASE_VERSION: ${{ needs.create_timestamp.outputs.timestamp }}

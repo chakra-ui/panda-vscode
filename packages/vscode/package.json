@@ -1,5 +1,6 @@
 {
   "publisher": "chakra-ui",
+  "packageManager": "yarn@4.0.1",
   "name": "panda-css-vscode",
   "displayName": "🐼 Panda CSS",
   "description": "The official Panda CSS plugin for VS Code",
@@ -195,24 +196,20 @@
     "directory": "packages/vscode"
   },
   "scripts": {
-    "build:lsp": "pnpm --filter=../language-server build",
-    "build:shared": "pnpm --filter=../shared build",
-    "build:ts-plugin": "pnpm --filter=../ts-plugin build",
-    "build:all": "pnpm build:shared && pnpm build:lsp && pnpm build:ts-plugin",
+    "build:all": "yarn workspaces foreach -R run build",
     "build": "tsup",
     "dev": "tsup --watch src/index.ts --watch ../language-server/dist/index.js --watch ../shared/dist/index.js --watch ../ts-plugin/dist/index.js",
     "clean": "rimraf dist node_modules",
     "typecheck": "tsc --noEmit",
-    "rewrite-deps": "tsx ./scripts/rewrite-workspace-dependencies.ts",
-    "override-esbuild": "tsx ./scripts/override-esbuild-with-wasm.ts",
-    "release": "pnpm build --silent && tsx ./scripts/publish.ts",
-    "local:build": "pnpm rewrite-deps && pnpm clean && pnpm override-esbuild && npm i --ignore-scripts && pnpm build:all && pnpm build && pnpm vsix-builder package"
+    "release": "yarn build --silent && tsx ./scripts/publish.ts",
+    "pkg": "yarn vsix-builder package"
   },
   "dependencies": {
     "@pandacss/dev": "^0.17.0",
     "@pandacss/preset-base": "^0.17.0",
     "@pandacss/preset-panda": "^0.17.0",
     "@pandacss/ts-plugin": "workspace:^",
+    "esbuild": "^0.17.8",
     "pathe": "1.1.1"
   },
   "bundledDependencies": [
@@ -220,22 +217,27 @@
     "@pandacss/dev",
     "@pandacss/preset-base",
     "@pandacss/preset-panda",
-    "pathe"
+    "pathe",
+    "esbuild"
   ],
   "devDependencies": {
     "@pandacss/extension-shared": "workspace:^",
     "@pandacss/language-server": "workspace:^",
+    "@pandacss/types": "^0.16.0",
     "@pandacss/vsix-builder": "workspace:^",
     "@pnpm/find-workspace-dir": "^6.0.2",
     "@pnpm/find-workspace-packages": "^6.0.9",
+    "@pnpm/types": "^9.4.0",
     "@types/node": "20.4.5",
-    "@types/vscode": "^1.80.0",
-    "@vscode/vsce": "^2.20.0",
+    "@types/semver": "^7.5.4",
+    "@types/vscode": "^1.67.0",
+    "@vscode/vsce": "^2.22.0",
     "dotenv": "^16.3.1",
     "execa": "7.2.0",
     "fs-extra": "11.1.1",
     "semver": "^7.5.4",
     "tsup": "7.1.0",
+    "tsx": "^3.14.0",
     "typescript": "^5.2.2",
     "vscode": "^1.1.37",
     "vscode-languageclient": "^8.1.0"

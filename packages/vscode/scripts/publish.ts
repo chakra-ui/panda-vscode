@@ -34,11 +34,11 @@ if (!rcVersion) {
 }
 
 const commands = {
-  vscode_package: `pnpm vsix-builder package ${rcVersion} --target ${target} -o panda.vsix`,
-  vscode_publish: `pnpm vsce publish --packagePath panda.vsix --pat ${process.env.VSCE_TOKEN}`,
+  vscode_package: `yarn vsix-builder package ${rcVersion} --target ${target} -o panda.vsix`,
+  vscode_publish: `yarn vsce publish --packagePath panda.vsix --pat ${process.env.VSCE_TOKEN}`,
   // rc release: publish to VS Code Marketplace with today's date as patch number
-  vscode_package_rc: `pnpm vsix-builder package ${rcVersion} --pre-release --target ${target} -o panda.vsix`,
-  vscode_rc: `pnpm vsce publish --pre-release --packagePath panda.vsix --pat ${process.env.VSCE_TOKEN}`,
+  vscode_package_rc: `yarn vsix-builder package ${rcVersion} --pre-release --target ${target} -o panda.vsix`,
+  vscode_rc: `yarn vsce publish --pre-release --packagePath panda.vsix --pat ${process.env.VSCE_TOKEN}`,
   // To publish to the open-vsx registry
   openvsx_publish: `npx ovsx publish panda.vsix --pat ${process.env.OVSX_TOKEN}`,
 }

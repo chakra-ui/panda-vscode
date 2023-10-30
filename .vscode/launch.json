@@ -34,7 +34,7 @@
       "skipFiles": ["<node_internals>/**"]
     },
     {
-      "command": "pnpm test ${relativeFile}",
+      "command": "yarn test ${relativeFile}",
       "name": "Run Vitest",
       "request": "launch",
       "type": "node-terminal"

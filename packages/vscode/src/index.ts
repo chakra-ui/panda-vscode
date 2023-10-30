@@ -2,7 +2,7 @@ import * as vscode from 'vscode'
 import { LanguageClient } from 'vscode-languageclient/node'
 import { PandaExtension } from './panda-extension'
 
-const debug = true
+const debug = false
 let client: LanguageClient | undefined
 
 export async function activate(context: vscode.ExtensionContext) {

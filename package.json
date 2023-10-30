@@ -4,10 +4,10 @@
   "private": true,
   "description": "The repository of css panda",
   "scripts": {
-    "prepare": "pnpm build-fast",
-    "dev": "pnpm -r --parallel --filter=./packages/** dev",
-    "build-fast": "pnpm -r --parallel --filter=./packages/** build-fast",
-    "build": "pnpm -r --filter=./packages/** build",
+    "prepare": "yarn build-fast",
+    "dev": "yarn workspaces foreach -A --exclude 'sandbox-vite' -pt run dev",
+    "build-fast": "yarn workspaces foreach -A --exclude 'sandbox-vite' -pt run build-fast",
+    "build": "yarn workspaces foreach -A --exclude 'sandbox-vite' run build",
     "test": "vitest",
     "lint": "eslint packages --ext .ts",
     "fmt": "prettier --write packages",
@@ -29,5 +29,16 @@
     "typescript": "5.2.2",
     "vitest": "0.33.0"
   },
-  "packageManager": "pnpm@8.6.4"
+  "resolutions": {
+    "panda-css-vscode/esbuild": "npm:esbuild-wasm@0.17.18"
+  },
+  "packageManager": "yarn@4.0.1",
+  "workspaces": [
+    "packages/*",
+    "sandbox/**"
+  ],
+  "devDependencies": {
+    "@types/eslint": "^8",
+    "eslint": "^8.52.0"
+  }
 }

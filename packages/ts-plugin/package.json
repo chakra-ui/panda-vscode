@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format=cjs --dts",
     "build-fast": "tsup src/index.ts --format=cjs --no-dts",
-    "dev": "pnpm build-fast --watch"
+    "dev": "yarn build-fast --watch"
   },
   "devDependencies": {
     "@pandacss/extension-shared": "workspace:^",

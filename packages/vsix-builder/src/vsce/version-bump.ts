@@ -46,7 +46,7 @@ export async function versionBump(manifest: Manifest, options: IVersionBumpOptio
     console.log(`Bumped version from ${manifestVersion} to ${rcVersion}`)
   }
 
-  let command = `npm version ${rcVersion}`
+  let command = `yarn version ${rcVersion}`
 
   if (options.commitMessage) {
     command = `${command} -m "${options.commitMessage}"`

@@ -1,4 +1,4 @@
 import { PandaLanguageServer } from './panda-language-server'
 
-const debug = true
+const debug = false
 new PandaLanguageServer(debug)

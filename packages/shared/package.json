@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format=esm,cjs --dts",
     "build-fast": "tsup src/index.ts --format=esm,cjs --no-dts",
-    "dev": "pnpm build-fast --watch",
+    "dev": "yarn build-fast --watch",
     "clean": "rimraf dist",
     "lint": "eslint ./src --ext .ts,.tsx --fix"
   },
