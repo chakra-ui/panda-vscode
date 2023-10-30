@@ -85,8 +85,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       lil-fp:
-        specifier: 1.4.5
-        version: 1.4.5
+        specifier: 1.5.0
+        version: 1.5.0
       postcss:
         specifier: ^8.4.31
         version: 8.4.31
@@ -6149,6 +6149,11 @@ packages:
 
   /lil-fp@1.4.5:
     resolution: {integrity: sha512-RrMQ2dB7SDXriFPZMMHEmroaSP6lFw3QEV7FOfSkf19kvJnDzHqKMc2P9HOf5uE8fOp5YxodSrq7XxWjdeC2sw==}
+
+  /lil-fp@1.5.0:
+    resolution: {integrity: sha512-qZtn12kAsWmaDt989gq7IeL2lX4wWOHSkNVpmdFJFtHUslX1JtdtWjzXtAxbFyWtDwoTyGaNSsRRA/lVD3FcyA==}
+    requiresBuild: true
+    dev: true
 
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
