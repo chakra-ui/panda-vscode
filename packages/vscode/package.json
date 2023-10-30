@@ -235,7 +235,7 @@
     "execa": "7.2.0",
     "fs-extra": "11.1.1",
     "semver": "^7.5.4",
-    "tsup": "7.1.0",
+    "tsup": "7.2.0",
     "typescript": "^5.2.2",
     "vscode": "^1.1.37",
     "vscode-languageclient": "^8.1.0"

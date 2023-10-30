@@ -28,7 +28,7 @@
     "@types/tar-stream": "^2.2.2",
     "@types/xml2js": "^0.4.11",
     "@types/yauzl": "^2.10.0",
-    "tsup": "7.1.0",
+    "tsup": "7.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
