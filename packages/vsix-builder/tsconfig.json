@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src", "index.ts", "../vscode/scripts/index.ts"],
+  "include": ["src"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
+    "noUncheckedIndexedAccess": false,
     "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
   }
 }

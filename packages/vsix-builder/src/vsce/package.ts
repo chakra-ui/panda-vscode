@@ -1241,7 +1241,6 @@ async function toContentTypes(files: IFile[]): Promise<string> {
     const ext = extname(file.path).toLowerCase()
 
     if (ext) {
-      // @ts-ignore
       mimetypes.set(ext, mime.lookup(ext))
     }
   }

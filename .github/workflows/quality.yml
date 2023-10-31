@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/composite-actions/install
 
       - name: Run Prettier
-        run: pnpm fmt
+        run: yarn fmt
 
   # tests:
   #   name: Unit Tests
@@ -37,7 +37,7 @@ jobs:
   #       uses: ./.github/composite-actions/install
 
   #     - name: Run tests
-  #       run: pnpm test
+  #       run: yarn test
 
   eslint:
     name: ESLint
@@ -50,7 +50,7 @@ jobs:
         uses: ./.github/composite-actions/install
 
       - name: Run ESLint
-        run: pnpm lint
+        run: yarn lint
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
@@ -65,4 +65,4 @@ jobs:
         uses: ./.github/composite-actions/install
 
       - name: Run TypeScript type check
-        run: pnpm typecheck
+        run: yarn typecheck
