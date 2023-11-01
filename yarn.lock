@@ -1615,7 +1615,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pandacss/extractor@npm:0.17.3, @pandacss/extractor@npm:^0.17.0":
+"@pandacss/extractor@npm:0.17.3":
   version: 0.17.3
   resolution: "@pandacss/extractor@npm:0.17.3"
   dependencies:
@@ -1624,6 +1624,18 @@ __metadata:
     ts-morph: "npm:19.0.0"
     ts-pattern: "npm:5.0.5"
   checksum: df086bc0cf177e04fc271e7f8f0f8ea80dfbb2f11bcd93d5bd877088db62082beafa376177500a03f65398c8fc2704771931ddf711322559649fb554c7e60273
+  languageName: node
+  linkType: hard
+
+"@pandacss/extractor@npm:^0.17.0":
+  version: 0.17.5
+  resolution: "@pandacss/extractor@npm:0.17.5"
+  dependencies:
+    lil-fp: "npm:1.4.5"
+    ts-evaluator: "npm:^1.1.0"
+    ts-morph: "npm:19.0.0"
+    ts-pattern: "npm:5.0.5"
+  checksum: 2f70d0cfc4a01bcb776386a6e1ecae07b4dbd1c3edc11b891f096bc89617b96eb951592a2f6bab61c09dd03d7dad5a17191fe7ad37a725df5db1df0322b6569e
   languageName: node
   linkType: hard
 
