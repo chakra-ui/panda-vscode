@@ -91,6 +91,22 @@ export class ProjectHelper {
         onResult(Object.assign({}, item, { box: map.value.get('base'), data: [base] })),
       )
     })
+    parserResult.sva.forEach((item) => {
+      const map = item.box
+      if (!box.isMap(map)) return
+      return item.data.forEach(({ base }) =>
+        onResult(Object.assign({}, item, { box: map.value.get('base'), data: [base] })),
+      )
+    })
+    parserResult.pattern.forEach((set, name) => {
+      set.forEach((item) => {
+        const map = item.box
+        if (!box.isMap(map)) return
+        return item.data.forEach((obj) => {
+          onResult({ box: map, data: [obj], name, type: 'pattern' })
+        })
+      })
+    })
   }
 }
 

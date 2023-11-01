@@ -1,12 +1,30 @@
-import { css } from '../styled-system/css'
+import { css, sva } from '../styled-system/css'
+import { button } from '../styled-system/recipes'
+import { flex } from '../styled-system/patterns'
 import './App.css'
+
+const card = sva({
+  slots: ['label', 'icon'],
+  base: {
+    label: {
+      color: 'red.200',
+    },
+    icon: {
+      fontSize: '3xl',
+    },
+  },
+})
+
+card()
+button({ size: 'sm' })
+flex({ direction: 'column', gap: 'initial', color: 'teal.300' })
 
 function App() {
   return (
     <>
       <div
         className={css({
-          color: "blue",
+          color: 'blue',
           outlineColor: 'bg',
           backgroundColor: 'bg.text',
           bgColor: 'bg',
