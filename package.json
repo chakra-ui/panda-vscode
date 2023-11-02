@@ -1,13 +1,13 @@
 {
-  "name": "panda",
+  "name": "panda-vscode",
   "version": "0.0.1",
   "private": true,
   "description": "The repository of css panda",
   "scripts": {
     "prepare": "yarn build-fast",
-    "dev": "yarn workspaces foreach -A --exclude 'sandbox-vite' -pt run dev",
-    "build-fast": "yarn workspaces foreach -A --exclude 'sandbox-vite' -pt run build-fast",
-    "build": "yarn workspaces foreach -A --exclude 'sandbox-vite' run build",
+    "dev": "yarn workspaces foreach -pA --exclude 'sandbox-vite' --exclude 'panda-vscode' run dev",
+    "build-fast": "yarn workspaces foreach -pA --exclude 'sandbox-vite'  --exclude 'panda-vscode' run build-fast",
+    "build": "yarn workspaces foreach -A --exclude 'sandbox-vite' --exclude 'panda-vscode' run build",
     "test": "vitest",
     "lint": "eslint packages --ext .ts",
     "fmt": "prettier --write packages",

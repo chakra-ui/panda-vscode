@@ -1,4 +1,5 @@
 import { defineConfig } from '@pandacss/dev'
+import { button} from "./src/button.recipe"
 
 export default defineConfig({
   // Whether to use css reset
@@ -13,6 +14,9 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      recipes: {
+        button,
+      },
       semanticTokens: {
         colors: {
           danger: {

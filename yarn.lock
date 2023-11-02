@@ -10530,9 +10530,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"panda@workspace:.":
+"panda-vscode@workspace:.":
   version: 0.0.0-use.local
-  resolution: "panda@workspace:."
+  resolution: "panda-vscode@workspace:."
   dependencies:
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.2"
