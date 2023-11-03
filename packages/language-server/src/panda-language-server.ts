@@ -65,7 +65,12 @@ export class PandaLanguageServer {
 
     this.project = new ProjectHelper(getContext)
     this.tokenFinder = new TokenFinder(getContext, this.project)
-    this.completions = new CompletionProvider(getContext, this.getPandaSettings, this.project, this.tokenFinder)
+    this.completions = new CompletionProvider(
+      getContext,
+      this.getPandaSettings.bind(this),
+      this.project,
+      this.tokenFinder,
+    )
 
     this.builderResolver = new BuilderResolver(({ configPath, builder }) => {
       const ctx = builder.context
