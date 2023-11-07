@@ -1870,7 +1870,7 @@ __metadata:
     "@types/markdown-it": "npm:^12.2.3"
     "@types/mime": "npm:^1"
     "@types/npm-packlist": "npm:^3.0.0"
-    "@types/read": "npm:^0.0.29"
+    "@types/read": "npm:^0.0.32"
     "@types/semver": "npm:^7.5.4"
     "@types/tar-stream": "npm:^2.2.2"
     "@types/xml2js": "npm:^0.4.11"
@@ -3176,10 +3176,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/read@npm:^0.0.29":
-  version: 0.0.29
-  resolution: "@types/read@npm:0.0.29"
-  checksum: ef853a944897b6cd21aa9ef6d655104f3e299167045de77277048b5b419b4256133be9cd873726ad916e9a7e3ac5f420b1c640b24466a05a71c57fc8fe1dcbad
+"@types/read@npm:^0.0.32":
+  version: 0.0.32
+  resolution: "@types/read@npm:0.0.32"
+  checksum: 01c33a161225a5ece31b7c992923aeb36b286b874d10066eb9ac6b2adf5e8d05234ba45191d2c0139564b90d8cf5f9c43c7c1f7d6a9572debdba5a3c017adc02
   languageName: node
   linkType: hard
 
