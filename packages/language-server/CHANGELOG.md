@@ -1,5 +1,12 @@
 # @pandacss/language-server
 
+## 0.17.1
+
+### Patch Changes
+
+- c457543: Fix inline token completions due to an issue with the settings retrieval
+- de1050f: Add support for color-hints / diagnostics / inlay-hints in `sva` definition and `pattern` usage
+
 ## 0.17.0
 
 ## 0.16.0
