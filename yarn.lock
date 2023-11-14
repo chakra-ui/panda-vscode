@@ -3230,9 +3230,9 @@ __metadata:
   linkType: hard
 
 "@types/utf8@npm:^3.0.1":
-  version: 3.0.2
-  resolution: "@types/utf8@npm:3.0.2"
-  checksum: 029bb66ca9800e2eae5c3cd2a0738f31e276ecec311c7c33965b01d3f6f1df12be4e3b6b75c3ed2557070b053c86c18bb18b1f6973549d92d1dbcaed739997b0
+  version: 3.0.3
+  resolution: "@types/utf8@npm:3.0.3"
+  checksum: 2caa2665ec1387600597460e0bd27184f452564b80f1926470d373b7d28fbd42f20d60dcd57c593f80603bfc580d280b29382a22c40d28132abbc50af2fe93f0
   languageName: node
   linkType: hard
 
