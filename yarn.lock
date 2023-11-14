@@ -2934,9 +2934,9 @@ __metadata:
   linkType: hard
 
 "@types/base-64@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "@types/base-64@npm:1.0.1"
-  checksum: 466717d642edf02bd590c716dc0decbbbf0bff31f6e11115b6e3e9b8b15dcda5ae63d46f7cc6b1659f8003a1cd902363b2fb57961cf14d50a33113728abe59bd
+  version: 1.0.2
+  resolution: "@types/base-64@npm:1.0.2"
+  checksum: 3ad69002bd9ca4e79c010f6d9a4c9d09967687153fa6bb98e9459c731219609a4ac76920451565784e9d98cbe3567429eb60bd1561918c3a6ea2436d894346af
   languageName: node
   linkType: hard
 
