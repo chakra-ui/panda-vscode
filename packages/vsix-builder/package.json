@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/mime": "^1",
     "@types/npm-packlist": "^3.0.0",
-    "@types/read": "^0.0.29",
+    "@types/read": "^0.0.32",
     "@types/semver": "^7.5.4",
     "@types/tar-stream": "^2.2.2",
     "@types/xml2js": "^0.4.11",
