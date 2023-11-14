@@ -3062,9 +3062,9 @@ __metadata:
   linkType: hard
 
 "@types/mime@npm:^1":
-  version: 1.3.4
-  resolution: "@types/mime@npm:1.3.4"
-  checksum: a0a16d26c0e70a1b133e26e7c46b70b3136b7e894396bdb7de1c642f4ac87fdbbba26bf56cf73f001312289d89de4f1c06ab745d9445850df45a5a802564c4d6
+  version: 1.3.5
+  resolution: "@types/mime@npm:1.3.5"
+  checksum: c2ee31cd9b993804df33a694d5aa3fa536511a49f2e06eeab0b484fef59b4483777dbb9e42a4198a0809ffbf698081fdbca1e5c2218b82b91603dfab10a10fbc
   languageName: node
   linkType: hard
 
