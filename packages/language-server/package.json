@@ -9,8 +9,8 @@
     "directory": "packages/language-server"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs --minify -d dist --clean --shims --external esbuild --external @pandacss/preset-base --external @pandacss/preset-panda",
-    "dev": "tsup src/index.ts --watch --format cjs -d dist --shims --external esbuild --external @pandacss/preset-base --external @pandacss/preset-panda",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rimraf dist",
     "typecheck": "tsc --noEmit"
   },
@@ -42,13 +42,13 @@
     "vscode-uri": "^3.0.7"
   },
   "dependencies": {
-    "@pandacss/core": "^0.17.0",
-    "@pandacss/extractor": "^0.17.0",
-    "@pandacss/node": "^0.17.0",
-    "@pandacss/parser": "^0.17.0",
-    "@pandacss/shared": "^0.17.0",
-    "@pandacss/token-dictionary": "^0.17.0",
-    "@pandacss/types": "^0.16.0",
+    "@pandacss/core": "^0.35.0",
+    "@pandacss/extractor": "^0.35.0",
+    "@pandacss/node": "^0.35.0",
+    "@pandacss/parser": "^0.35.0",
+    "@pandacss/shared": "^0.35.0",
+    "@pandacss/token-dictionary": "^0.35.0",
+    "@pandacss/types": "^0.35.0",
     "fast-glob": "^3.3.1"
   }
 }
