@@ -1,5 +1,5 @@
 import { defaultSettings, getFlattenedSettings, type PandaVSCodeSettings } from '@pandacss/extension-shared'
-import type { Builder } from '@pandacss/node'
+import type { Builder, PandaContext } from '@pandacss/node'
 import { glob } from 'fast-glob'
 import { TextDocument } from 'vscode-languageserver-textdocument'
 import {
@@ -46,7 +46,7 @@ export class PandaLanguageServer {
    * depending on the active document
    */
   context: Builder['context']
-  synchronizing = false as Promise<void> | false
+  synchronizing = false as Promise<PandaContext | undefined> | false
   //
   settings: PandaVSCodeSettings | undefined
   activeDocumentFilepath = ''
@@ -306,7 +306,7 @@ export class PandaLanguageServer {
       const ctx = this.getClosestPandaContext(this.activeDocumentFilepath)
 
       if (ctx) {
-        this.connection.console.log(`🐼 Found panda context! ✅ at ${ctx.path}`)
+        this.connection.console.log(`🐼 Found panda context! ✅ at ${ctx.conf.path}`)
       }
     }
   }

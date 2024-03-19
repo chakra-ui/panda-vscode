@@ -1,6 +1,6 @@
 import { getMarkdownCss, nodeRangeToVsCodeRange, printTokenValue } from '../tokens/utils'
 import { renderTokenColorPreview } from '../tokens/render-token-color-preview'
-import { generateKeyframeCss } from '../tokens/generate-keyframe-css'
+import { stringify } from '@pandacss/core'
 import { tryCatch } from 'lil-fp/func'
 import { onError } from '../tokens/error'
 import type { PandaLanguageServer } from '../panda-language-server'
@@ -31,7 +31,7 @@ export function registerHover(lsp: PandaLanguageServer) {
 
             const contents = [printTokenValue(token, settings)] as any[]
             if (settings['hovers.tokens.css-preview.enabled']) {
-              const css = getMarkdownCss(ctx, { [tokenMatch.propName]: token.value }, settings).raw
+              const css = (await getMarkdownCss(ctx, { [tokenMatch.propName]: token.value }, settings)).raw
               contents.push({ language: 'css', value: css })
             }
 
@@ -45,8 +45,11 @@ export function registerHover(lsp: PandaLanguageServer) {
             }
 
             if (category === 'animations' && token.extensions.prop) {
-              const keyframeCss = generateKeyframeCss(ctx, token.extensions.prop)
-              if (keyframeCss) {
+              const sheet = ctx.createSheet()
+              ctx.appendCssOfType('keyframes', sheet)
+              const keyframes = ctx.config.theme?.keyframes?.[token.extensions.prop]
+              if (keyframes) {
+                const keyframeCss = stringify(sheet.serialize({ ['@keyframes ' + token.extensions.prop]: keyframes }))
                 contents.push({ language: 'css', value: keyframeCss })
               }
             }
@@ -56,7 +59,7 @@ export function registerHover(lsp: PandaLanguageServer) {
 
           if (tokenMatch.kind === 'condition' && settings['hovers.conditions.enabled']) {
             const { condition, propValue, propName } = tokenMatch
-            const css = getMarkdownCss(ctx, { [propName]: propValue }, settings).raw
+            const css = (await getMarkdownCss(ctx, { [propName]: propValue }, settings)).raw
 
             return {
               contents: [`🐼 \`${condition.value}\``, { language: 'css', value: css }],
@@ -70,7 +73,7 @@ export function registerHover(lsp: PandaLanguageServer) {
         const instanceMatch = lsp.tokenFinder.getClosestInstance(doc, params.position)
         if (instanceMatch && instanceMatch.kind === 'styles') {
           const range = nodeRangeToVsCodeRange(instanceMatch.props.getRange())
-          return { contents: getMarkdownCss(ctx, instanceMatch.styles, settings).withCss, range }
+          return { contents: (await getMarkdownCss(ctx, instanceMatch.styles, settings)).withCss, range }
         }
       }
     }, onError),
