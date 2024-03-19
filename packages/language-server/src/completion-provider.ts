@@ -51,7 +51,7 @@ export class CompletionProvider {
     const settings = await this.getPandaSettings()
     const { propName, token, shorthand } = (item.data ?? {}) as { propName: string; token?: Token; shorthand: string }
     if (!token) return
-    const markdownCss = getMarkdownCss(ctx, { [propName]: token.value }, settings)
+    const markdownCss = await getMarkdownCss(ctx, { [propName]: token.value }, settings)
 
     const markdown = [markdownCss.withCss]
     if (shorthand !== propName) {

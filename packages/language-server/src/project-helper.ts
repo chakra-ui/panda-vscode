@@ -1,7 +1,7 @@
 import { Position } from 'vscode-languageserver'
 import { TextDocument } from 'vscode-languageserver-textdocument'
 
-import { type ParserResultType, type ResultItem } from '@pandacss/types'
+import { type ParserResultInterface, type ResultItem } from '@pandacss/types'
 import { Node, SourceFile, ts } from 'ts-morph'
 
 import { box, type PrimitiveType } from '@pandacss/extractor'
@@ -54,12 +54,13 @@ export class ProjectHelper {
   /**
    * Get all the tokens from the document and call a callback on it.
    */
-  getFileTokens(_doc: TextDocument, parserResult: ParserResultType, onRawToken: (token: RawToken) => void) {
+  getFileTokens(_doc: TextDocument, parserResult: ParserResultInterface, onRawToken: (token: RawToken) => void) {
     const ctx = this.getContext()
     if (!ctx) return
 
     const onResult = (result: ResultItem) => {
       const boxNode = result.box
+      if (!boxNode) return
       if (box.isLiteral(boxNode)) return
 
       result.data.forEach((styles) => {
