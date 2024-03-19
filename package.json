@@ -30,7 +30,8 @@
     "vitest": "0.33.0"
   },
   "resolutions": {
-    "panda-css-vscode/esbuild": "npm:esbuild-wasm@0.17.18"
+    "panda-css-vscode/esbuild": "npm:esbuild-wasm@0.17.18",
+    "panda-css-vscode/lightningcss": "npm:lightningcss-wasm@1.23.0"
   },
   "packageManager": "yarn@4.0.1",
   "workspaces": [
