@@ -205,9 +205,9 @@
     "pkg": "yarn vsix-builder package"
   },
   "dependencies": {
-    "@pandacss/dev": "^0.35.0",
-    "@pandacss/preset-base": "^0.35.0",
-    "@pandacss/preset-panda": "^0.35.0",
+    "@pandacss/dev": "^0.36.0",
+    "@pandacss/preset-base": "^0.36.0",
+    "@pandacss/preset-panda": "^0.36.0",
     "@pandacss/ts-plugin": "workspace:^",
     "esbuild": "^0.20.2",
     "pathe": "1.1.2"
@@ -223,7 +223,7 @@
   "devDependencies": {
     "@pandacss/extension-shared": "workspace:^",
     "@pandacss/language-server": "workspace:^",
-    "@pandacss/types": "^0.35.0",
+    "@pandacss/types": "^0.36.0",
     "@pandacss/vsix-builder": "workspace:^",
     "@pnpm/find-workspace-dir": "^6.0.3",
     "@pnpm/find-workspace-packages": "^6.0.9",
