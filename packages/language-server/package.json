@@ -22,24 +22,24 @@
   ],
   "devDependencies": {
     "@pandacss/extension-shared": "workspace:*",
-    "@types/base-64": "^1.0.0",
-    "@types/node": "20.4.5",
-    "@types/prettier": "2.7.3",
-    "@types/utf8": "^3.0.1",
+    "@types/base-64": "^1.0.2",
+    "@types/node": "20.11.30",
+    "@types/prettier": "3.0.0",
+    "@types/utf8": "^3.0.3",
     "base-64": "^1.0.0",
-    "color2k": "^2.0.2",
+    "color2k": "^2.0.3",
     "lil-fp": "1.4.5",
-    "postcss": "^8.4.31",
-    "prettier": "^2.8.8",
-    "satori": "^0.10.1",
-    "ts-morph": "19.0.0",
-    "ts-pattern": "5.0.5",
-    "tsup": "7.1.0",
-    "typescript": "^5.2.2",
+    "postcss": "^8.4.36",
+    "prettier": "^3.2.5",
+    "satori": "^0.10.13",
+    "ts-morph": "21.0.1",
+    "ts-pattern": "5.0.8",
+    "tsup": "8.0.2",
+    "typescript": "^5.4.2",
     "utf8": "^3.0.0",
-    "vscode-languageserver": "^8.1.0",
-    "vscode-languageserver-textdocument": "^1.0.8",
-    "vscode-uri": "^3.0.7"
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.11",
+    "vscode-uri": "^3.0.8"
   },
   "dependencies": {
     "@pandacss/core": "^0.35.0",
@@ -49,6 +49,6 @@
     "@pandacss/shared": "^0.35.0",
     "@pandacss/token-dictionary": "^0.35.0",
     "@pandacss/types": "^0.35.0",
-    "fast-glob": "^3.3.1"
+    "fast-glob": "^3.3.2"
   }
 }

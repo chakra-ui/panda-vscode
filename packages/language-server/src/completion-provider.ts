@@ -127,7 +127,7 @@ const getCompletionFor = ({
 
     // provide completion for token category when token() is empty or partial
     if (split.length < 1) {
-      return Array.from(ctx.tokens.categoryMap.keys()).map((category) => {
+      return Array.from(ctx.tokens.view.categoryMap.keys()).map((category) => {
         return {
           label: category,
           kind: CompletionItemKind.EnumMember,
@@ -185,7 +185,7 @@ const getCompletionFor = ({
 
   if (!category) return []
 
-  const categoryValues = ctx.tokens.categoryMap.get(category!)
+  const categoryValues = ctx.tokens.view.categoryMap.get(category as any)
   if (!categoryValues) return []
 
   const items = [] as CompletionItem[]
