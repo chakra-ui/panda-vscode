@@ -28,7 +28,7 @@ export function registerInlayHints(lsp: PandaLanguageServer) {
 
       const inlayHints = [] as InlayHint[]
 
-      lsp.tokenFinder.getFileTokens(doc, parserResult, (match) => {
+      lsp.tokenFinder.getFileTokens(parserResult, (match) => {
         if (
           match.kind === 'token' &&
           match.token.extensions.kind !== 'color' &&

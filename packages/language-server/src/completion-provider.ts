@@ -6,7 +6,7 @@ import { BoxNodeLiteral, box } from '@pandacss/extractor'
 import { type PandaContext } from '@pandacss/node'
 import { traverse } from '@pandacss/shared'
 import { type Token } from '@pandacss/token-dictionary'
-import { getReferences, hasReference, hasTokenReference } from './tokens/expand-token-fn'
+import { getReferences, hasCurlyReference, hasTokenFnReference } from './tokens/expand-token-fn'
 import { makeColorTile, makeTable } from './tokens/render-markdown'
 import { getSortText } from './tokens/sort-text'
 import { getMarkdownCss, printTokenValue } from './tokens/utils'
@@ -33,9 +33,9 @@ export class CompletionProvider {
     const { node, stack } = match
 
     try {
-      return await this.tokenFinder.findClosestToken(node, stack, ({ propName, propNode, shorthand }) => {
+      return this.tokenFinder.findClosestToken(node, stack, ({ propName, propNode, shorthand }) => {
         if (!box.isLiteral(propNode)) return undefined
-        return getCompletionFor({ ctx, propName, propNode, settings, shorthand })
+        return getCompletionFor({ ctx, propName, propValue: propNode.value, settings, shorthand })
       })
     } catch (err) {
       console.error(err)
@@ -101,26 +101,24 @@ export class CompletionProvider {
   }
 }
 
-const getCompletionFor = ({
+export const getCompletionFor = ({
   ctx,
   propName,
   shorthand,
-  propNode,
+  propValue,
   settings,
 }: {
   ctx: PandaContext
   propName: string
   shorthand?: string
-  propNode: BoxNodeLiteral
+  propValue: BoxNodeLiteral['value']
   settings: PandaVSCodeSettings
 }) => {
-  const propValue = propNode.value
-
   let str = String(propValue)
   let category: string | undefined
 
   // also provide completion in string such as: token('colors.blue.300')
-  if (settings['completions.token-fn.enabled'] && (hasTokenReference(str) || hasReference(str))) {
+  if (settings['completions.token-fn.enabled'] && (hasTokenFnReference(str) || hasCurlyReference(str))) {
     const matches = getReferences(str)
     const tokenPath = matches[0] ?? ''
     const split = tokenPath.split('.').filter(Boolean)

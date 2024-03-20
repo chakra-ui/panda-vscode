@@ -52,9 +52,9 @@ export class ProjectHelper {
   }
 
   /**
-   * Get all the tokens from the document and call a callback on it.
+   * Get all the tokens from the document and invoke a callback on it.
    */
-  getFileTokens(_doc: TextDocument, parserResult: ParserResultInterface, onRawToken: (token: RawToken) => void) {
+  getFileTokens(parserResult: ParserResultInterface, onRawToken: (token: RawToken) => void) {
     const ctx = this.getContext()
     if (!ctx) return
 
