@@ -5,7 +5,7 @@ import { type PandaVSCodeSettings } from '@pandacss/extension-shared'
 import { BoxNodeLiteral, box } from '@pandacss/extractor'
 import { type PandaContext } from '@pandacss/node'
 import { type Token } from '@pandacss/token-dictionary'
-import { extractTokenPaths } from './tokens/expand-token-fn'
+import { getReferences, hasReference, hasTokenReference } from './tokens/expand-token-fn'
 import { makeColorTile, makeTable } from './tokens/render-markdown'
 import { getSortText } from './tokens/sort-text'
 import { traverse } from './tokens/traverse'
@@ -120,8 +120,8 @@ const getCompletionFor = ({
   let category: string | undefined
 
   // also provide completion in string such as: token('colors.blue.300')
-  if (settings['completions.token-fn.enabled'] && str.includes('token(')) {
-    const matches = extractTokenPaths(str)
+  if (settings['completions.token-fn.enabled'] && (hasTokenReference(str) || hasReference(str))) {
+    const matches = getReferences(str)
     const tokenPath = matches[0] ?? ''
     const split = tokenPath.split('.').filter(Boolean)
 

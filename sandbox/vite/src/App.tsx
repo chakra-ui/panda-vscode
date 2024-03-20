@@ -29,6 +29,7 @@ function App() {
           backgroundColor: 'bg.text',
           bgColor: 'bg',
           border: '1px solid token(colors.amber.400)',
+          outline: '2px solid {colors.red.300}',
           margin: '2rem',
           padding: '4',
           fontSize: '2xl',

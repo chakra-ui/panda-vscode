@@ -96,7 +96,7 @@
           "type": "boolean",
           "default": true,
           "title": "token fn completions",
-          "description": "Enable token(xxx.yyy.zzz) completions"
+          "description": "Enable token references completions with token(xxx.yyy.zzz) or {xxx.yyy.zzz}"
         },
         "panda.diagnostics.enabled": {
           "type": "boolean",
