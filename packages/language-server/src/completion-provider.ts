@@ -153,10 +153,13 @@ const getCompletionFor = ({
       category = utility.values
     } else if (typeof utility.values === 'function') {
       // values: (theme) => { ...theme("spacing") }
-      const record = ctx.utility.getPropertyValues(utility)
+      const record = ctx.utility.getPropertyValues(utility, (cat) => {
+        category = cat
+        return cat
+      })
       if (record) {
-        if (record.type) category = record.type
-        else propValues = record
+        if (record.type) category = record.type as string
+        else propValues = record as Record<string, string>
       }
     }
   }
