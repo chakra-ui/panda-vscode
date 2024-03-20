@@ -12,7 +12,8 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rimraf dist",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
   },
   "publishConfig": {
     "access": "public"
@@ -37,6 +38,7 @@
     "tsup": "8.0.2",
     "typescript": "^5.4.2",
     "utf8": "^3.0.0",
+    "vitest": "^1.4.0",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-uri": "^3.0.8"

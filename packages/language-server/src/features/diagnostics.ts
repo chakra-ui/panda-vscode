@@ -32,7 +32,7 @@ export function registerDiagnostics(lsp: PandaLanguageServer) {
       })
     }
 
-    lsp.tokenFinder.getFileTokens(doc, parserResult, (match) => {
+    lsp.tokenFinder.getFileTokens(parserResult, (match) => {
       if (
         match.kind === 'token' &&
         match.token.extensions.kind === 'invalid-token-path' &&

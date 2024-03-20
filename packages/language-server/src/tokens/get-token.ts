@@ -2,7 +2,7 @@ import { type PandaContext } from '@pandacss/node'
 import { type Token } from '@pandacss/token-dictionary'
 import { color2kToVsCodeColor } from './color2k-to-vscode-color'
 import { isColor } from './is-color'
-import { expandReferences } from './expand-token-fn'
+import { getTokensInString, hasTokenRef } from './expand-token-fn'
 
 const getColorExtensions = (value: string, kind: string) => {
   const vscodeColor = color2kToVsCodeColor(value)
@@ -33,8 +33,8 @@ export const getTokenFromPropValue = (ctx: PandaContext, prop: string, value: st
     }
 
     // border="1px solid token(colors.gray.300)"
-    if (typeof value === 'string' && value.includes('token(')) {
-      const matches = expandReferences(value, (key) => ctx.tokens.getByName(key))
+    if (typeof value === 'string' && hasTokenRef(value)) {
+      const matches = getTokensInString(value, (key) => ctx.tokens.getByName(key))
 
       // wrong token path
       if (!matches.length) {

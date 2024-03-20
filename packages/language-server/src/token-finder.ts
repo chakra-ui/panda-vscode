@@ -33,11 +33,11 @@ export class TokenFinder {
   /**
    * Get all the tokens from the document and call a callback on it.
    */
-  getFileTokens(_doc: TextDocument, parserResult: ParserResultInterface, onToken: OnTokenCallback) {
+  getFileTokens(parserResult: ParserResultInterface, onToken: OnTokenCallback) {
     const ctx = this.getContext()
     if (!ctx) return
 
-    this.project.getFileTokens(_doc, parserResult, ({ propName, propValue, shorthand, propNode }) => {
+    this.project.getFileTokens(parserResult, ({ propName, propValue, shorthand, propNode }) => {
       const token = getTokenFromPropValue(ctx, propName, String(propValue))
       if (!token) return
 
