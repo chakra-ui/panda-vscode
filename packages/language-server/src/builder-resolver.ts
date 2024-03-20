@@ -1,4 +1,4 @@
-import { Builder } from '@pandacss/node'
+import { Builder, PandaContext } from '@pandacss/node'
 import path from 'path'
 
 /**
@@ -8,7 +8,7 @@ import path from 'path'
  */
 export class BuilderResolver {
   private builderByConfigDirpath = new Map<string, Builder>()
-  private synchronizingByConfigDirpath = new Map<string, Promise<void> | false>()
+  private synchronizingByConfigDirpath = new Map<string, Promise<PandaContext | undefined> | false>()
 
   private configDirpathList = new Set<string>()
   private configDirPathByFilepath = new Map<string, string>()

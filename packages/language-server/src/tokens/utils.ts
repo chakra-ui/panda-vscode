@@ -4,13 +4,15 @@ import { Range } from 'vscode-languageserver'
 
 import { type SystemStyleObject } from '@pandacss/types'
 
-import { AtomicRule, optimizeCss } from '@pandacss/core'
+import { RuleProcessor } from '@pandacss/core'
 import { type PandaContext } from '@pandacss/node'
 import { toPx } from '@pandacss/shared'
 import * as base64 from 'base-64'
 
-import parserCSS from 'prettier/parser-postcss'
-import prettier from 'prettier/standalone'
+import prettierPluginBabel from 'prettier/plugins/babel'
+import prettierPluginHtml from 'prettier/plugins/html'
+import prettierPluginPostcss from 'prettier/plugins/postcss'
+import prettier from 'prettier'
 import { match } from 'ts-pattern'
 import * as utf8 from 'utf8'
 
@@ -28,7 +30,7 @@ export const nodeRangeToVsCodeRange = (range: NodeRange) =>
 function getPrettiedCSS(css: string) {
   return prettier.format(css, {
     parser: 'css',
-    plugins: [parserCSS],
+    plugins: [prettierPluginHtml, prettierPluginBabel, prettierPluginPostcss],
   })
 }
 
@@ -37,7 +39,7 @@ export type DisplayOptions = {
   forceHash?: PandaVSCodeSettings['hovers.display.force-hash']
 }
 
-export const getMarkdownCss = (ctx: PandaContext, styles: SystemStyleObject, settings: PandaVSCodeSettings) => {
+export const getMarkdownCss = async (ctx: PandaContext, styles: SystemStyleObject, settings: PandaVSCodeSettings) => {
   const mode = settings['hovers.display.mode']
   const forceHash = settings['hovers.display.force-hash']
 
@@ -46,17 +48,17 @@ export const getMarkdownCss = (ctx: PandaContext, styles: SystemStyleObject, set
     ctx.config.hash = true
   }
 
-  const context = ctx.createSheetContext()
-  const rule = new AtomicRule(context)
-  rule.process({ styles })
+  const processor = new RuleProcessor(ctx)
+  processor.clone()
+  processor.css({ styles })
 
   const css = match(mode ?? 'optimized')
-    .with('nested', () => rule.toCss())
-    .with('optimized', () => optimizeCss(rule.toCss()))
-    .with('minified', () => optimizeCss(rule.toCss(), { minify: true }))
+    .with('nested', () => processor.toCss({ optimize: false }))
+    .with('optimized', () => processor.toCss({ optimize: true }))
+    .with('minified', () => processor.toCss({ optimize: true, minify: true }))
     .run()
 
-  const raw = getPrettiedCSS(css)
+  const raw = await getPrettiedCSS(css)
   const withCss = '```css' + '\n' + raw + '\n' + '```'
 
   // restore hash

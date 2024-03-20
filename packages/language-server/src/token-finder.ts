@@ -1,7 +1,7 @@
 import { Position, Range } from 'vscode-languageserver'
 import { TextDocument } from 'vscode-languageserver-textdocument'
 
-import { type Dict, type ParserResultType, type RawCondition } from '@pandacss/types'
+import { type Dict, type ParserResultInterface, type ConditionDetails } from '@pandacss/types'
 import { CallExpression, JsxOpeningElement, JsxSelfClosingElement, Node } from 'ts-morph'
 
 import {
@@ -25,16 +25,19 @@ import { getTokenFromPropValue } from './tokens/get-token'
 import { isObjectLike, nodeRangeToVsCodeRange } from './tokens/utils'
 
 export class TokenFinder {
-  constructor(private getContext: GetContext, private project: ProjectHelper) {}
+  constructor(
+    private getContext: GetContext,
+    private project: ProjectHelper,
+  ) {}
 
   /**
    * Get all the tokens from the document and call a callback on it.
    */
-  getFileTokens(_doc: TextDocument, parserResult: ParserResultType, onToken: OnTokenCallback) {
+  getFileTokens(parserResult: ParserResultInterface, onToken: OnTokenCallback) {
     const ctx = this.getContext()
     if (!ctx) return
 
-    this.project.getFileTokens(_doc, parserResult, ({ propName, propValue, shorthand, propNode }) => {
+    this.project.getFileTokens(parserResult, ({ propName, propValue, shorthand, propNode }) => {
       const token = getTokenFromPropValue(ctx, propName, String(propValue))
       if (!token) return
 
@@ -246,7 +249,7 @@ type ClosestTokenMatch = ClosestMatch & {
 
 type ClosestConditionMatch = ClosestMatch & {
   kind: 'condition'
-  condition: RawCondition
+  condition: ConditionDetails
   propValue: Unboxed['raw']
   shorthand: never
 }
