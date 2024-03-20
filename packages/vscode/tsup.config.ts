@@ -23,7 +23,7 @@ export default defineConfig({
         build.onResolve({ filter: /.*/ }, (args) => {
           for (const alias in aliases) {
             if (args.path.startsWith(alias)) {
-              const updated = path.resolve(nodeModulesPath, aliases[alias])
+              const updated = path.resolve(nodeModulesPath, aliases[alias as keyof typeof aliases])
 
               return { path: updated }
             }
