@@ -18,6 +18,8 @@ const docSelector: vscode.DocumentSelector = [
   'javascript',
   'javascriptreact',
   'astro',
+  'glimmer-js',
+  'glimmer-ts',
   // TODO re-enable whenever we figured out how to map transformed file AST nodes to their original positions
   // 'svelte',
   // 'vue',
