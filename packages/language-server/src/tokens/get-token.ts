@@ -70,7 +70,7 @@ export const getTokenFromPropValue = (ctx: PandaContext, prop: string, value: st
 
   let color = token.value
   // could be a semantic token, so the token.value wouldn't be a color directly, it's actually a CSS variable
-  if (!isColor(color) && token.value.startsWith('var(--')) {
+  if (!isColor(color) && typeof token.value === "string" && token.value.startsWith('var(--')) {
     const [tokenRef] = ctx.tokens.getReferences(token.originalValue)
     if (tokenRef?.value) {
       color = tokenRef.value
