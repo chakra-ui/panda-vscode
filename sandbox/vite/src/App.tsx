@@ -32,6 +32,7 @@ function App() {
           margin: '2rem',
           padding: '4',
           fontSize: '2xl',
+          lineHeight: 'normal'
         })}
       >
         Hello from Panda !

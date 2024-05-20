@@ -17,6 +17,11 @@ export default defineConfig({
       recipes: {
         button,
       },
+      tokens: {
+        lineHeights: {
+          normal: { value: 1.4 }
+        }
+      },
       semanticTokens: {
         colors: {
           danger: {
