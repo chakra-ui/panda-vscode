@@ -1,7 +1,7 @@
 {
   "name": "@pandacss/vsix-builder",
   "description": "Forked version of @vscode/vsce to support symlinks",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -1,5 +1,11 @@
 # @pandacss/extension-shared
 
+## 0.18.0
+
+### Minor Changes
+
+- bd5ca1b: Update Panda version to 0.37.2 (from 0.17.0), fixes a bunch of small issues
+
 ## 0.17.0
 
 ### Patch Changes
