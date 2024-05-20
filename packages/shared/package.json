@@ -29,6 +29,6 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
-    "@pandacss/shared": "^0.36.0"
+    "@pandacss/shared": "^0.37.2"
   }
 }

@@ -44,13 +44,13 @@
     "vscode-uri": "^3.0.8"
   },
   "dependencies": {
-    "@pandacss/core": "^0.36.0",
-    "@pandacss/extractor": "^0.36.0",
-    "@pandacss/node": "^0.36.0",
-    "@pandacss/parser": "^0.36.0",
-    "@pandacss/shared": "^0.36.0",
-    "@pandacss/token-dictionary": "^0.36.0",
-    "@pandacss/types": "^0.36.0",
+    "@pandacss/core": "^0.37.2",
+    "@pandacss/extractor": "^0.37.2",
+    "@pandacss/node": "^0.37.2",
+    "@pandacss/parser": "^0.37.2",
+    "@pandacss/shared": "^0.37.2",
+    "@pandacss/token-dictionary": "^0.37.2",
+    "@pandacss/types": "^0.37.2",
     "fast-glob": "^3.3.2"
   }
 }
