@@ -1,5 +1,17 @@
 # panda-css-vscode
 
+## 0.3.0
+
+### Minor Changes
+
+- bd5ca1b: Update Panda version to 0.37.2 (from 0.17.0), fixes a bunch of small issues
+
+### Patch Changes
+
+- 4ff4a13: Support extendion activation on `.gjs` and `.gts` files for Next-gen Ember files
+- Updated dependencies [bd5ca1b]
+  - @pandacss/ts-plugin@0.18.0
+
 ## 0.2.27
 
 ### Patch Changes
