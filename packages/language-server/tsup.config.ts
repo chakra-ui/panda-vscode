@@ -1,4 +1,5 @@
 import { copyFile } from 'fs'
+import { resolve } from 'path'
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
@@ -11,8 +12,8 @@ export default defineConfig({
   shims: true,
   onSuccess() {
     console.log('✅ Build complete!')
-    copyFile('./dist/index.js', '../vscode/dist/server.js', (err) => {
-      if (err) throw err
+    copyFile(resolve(__dirname, './dist/index.js'), resolve(__dirname, '../vscode/dist/server.js'), (err) => {
+      if (err) return console.warn(err)
       console.log('✅ Server.js copied to vscode/dist')
     })
 
