@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "@pandacss/extension-shared": "workspace:^",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.2"
   }
 }

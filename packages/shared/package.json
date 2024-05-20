@@ -25,10 +25,10 @@
     "lint": "eslint ./src --ext .ts,.tsx --fix"
   },
   "devDependencies": {
-    "tsup": "7.1.0",
-    "typescript": "^5.2.2"
+    "tsup": "8.0.2",
+    "typescript": "^5.4.2"
   },
   "dependencies": {
-    "@pandacss/shared": "^0.17.0"
+    "@pandacss/shared": "^0.37.2"
   }
 }

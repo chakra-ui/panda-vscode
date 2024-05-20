@@ -4,11 +4,11 @@ import { TextDocument } from 'vscode-languageserver-textdocument'
 import { type PandaVSCodeSettings } from '@pandacss/extension-shared'
 import { BoxNodeLiteral, box } from '@pandacss/extractor'
 import { type PandaContext } from '@pandacss/node'
+import { traverse } from '@pandacss/shared'
 import { type Token } from '@pandacss/token-dictionary'
-import { extractTokenPaths } from './tokens/expand-token-fn'
+import { getReferences, hasCurlyReference, hasTokenFnReference } from './tokens/expand-token-fn'
 import { makeColorTile, makeTable } from './tokens/render-markdown'
 import { getSortText } from './tokens/sort-text'
-import { traverse } from './tokens/traverse'
 import { getMarkdownCss, printTokenValue } from './tokens/utils'
 import type { GetContext } from './panda-language-server'
 import type { ProjectHelper } from './project-helper'
@@ -33,9 +33,9 @@ export class CompletionProvider {
     const { node, stack } = match
 
     try {
-      return await this.tokenFinder.findClosestToken(node, stack, ({ propName, propNode, shorthand }) => {
+      return this.tokenFinder.findClosestToken(node, stack, ({ propName, propNode, shorthand }) => {
         if (!box.isLiteral(propNode)) return undefined
-        return getCompletionFor({ ctx, propName, propNode, settings, shorthand })
+        return getCompletionFor({ ctx, propName, propValue: propNode.value, settings, shorthand })
       })
     } catch (err) {
       console.error(err)
@@ -51,7 +51,7 @@ export class CompletionProvider {
     const settings = await this.getPandaSettings()
     const { propName, token, shorthand } = (item.data ?? {}) as { propName: string; token?: Token; shorthand: string }
     if (!token) return
-    const markdownCss = getMarkdownCss(ctx, { [propName]: token.value }, settings)
+    const markdownCss = await getMarkdownCss(ctx, { [propName]: token.value }, settings)
 
     const markdown = [markdownCss.withCss]
     if (shorthand !== propName) {
@@ -101,33 +101,31 @@ export class CompletionProvider {
   }
 }
 
-const getCompletionFor = ({
+export const getCompletionFor = ({
   ctx,
   propName,
   shorthand,
-  propNode,
+  propValue,
   settings,
 }: {
   ctx: PandaContext
   propName: string
   shorthand?: string
-  propNode: BoxNodeLiteral
+  propValue: BoxNodeLiteral['value']
   settings: PandaVSCodeSettings
 }) => {
-  const propValue = propNode.value
-
   let str = String(propValue)
   let category: string | undefined
 
   // also provide completion in string such as: token('colors.blue.300')
-  if (settings['completions.token-fn.enabled'] && str.includes('token(')) {
-    const matches = extractTokenPaths(str)
+  if (settings['completions.token-fn.enabled'] && (hasTokenFnReference(str) || hasCurlyReference(str))) {
+    const matches = getReferences(str)
     const tokenPath = matches[0] ?? ''
     const split = tokenPath.split('.').filter(Boolean)
 
     // provide completion for token category when token() is empty or partial
     if (split.length < 1) {
-      return Array.from(ctx.tokens.categoryMap.keys()).map((category) => {
+      return Array.from(ctx.tokens.view.categoryMap.keys()).map((category) => {
         return {
           label: category,
           kind: CompletionItemKind.EnumMember,
@@ -153,10 +151,13 @@ const getCompletionFor = ({
       category = utility.values
     } else if (typeof utility.values === 'function') {
       // values: (theme) => { ...theme("spacing") }
-      const record = ctx.utility.getPropertyValues(utility)
+      const record = ctx.utility.getPropertyValues(utility, (cat) => {
+        category = cat
+        return cat
+      })
       if (record) {
-        if (record.type) category = record.type
-        else propValues = record
+        if (record.type) category = record.type as string
+        else propValues = record as Record<string, string>
       }
     }
   }
@@ -185,7 +186,7 @@ const getCompletionFor = ({
 
   if (!category) return []
 
-  const categoryValues = ctx.tokens.categoryMap.get(category!)
+  const categoryValues = ctx.tokens.view.categoryMap.get(category as any)
   if (!categoryValues) return []
 
   const items = [] as CompletionItem[]

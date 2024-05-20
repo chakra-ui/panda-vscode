@@ -9,6 +9,8 @@ const TRIGGER_CHARACTERS = [
   '(',
   // token fn paths
   '.',
+  // curly token reference in string
+  '{',
 ]
 
 export const getDefaultCapabilities = (): ServerCapabilities => ({

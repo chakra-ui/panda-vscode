@@ -28,7 +28,7 @@ export function registerColorHints(lsp: PandaLanguageServer) {
 
       const colors: ColorInformation[] = []
 
-      lsp.tokenFinder.getFileTokens(doc, parserResult, (match) => {
+      lsp.tokenFinder.getFileTokens(parserResult, (match) => {
         const isColor = match.kind === 'token' && match.token.extensions?.vscodeColor
         if (!isColor) return
 
