@@ -316,7 +316,6 @@ function isHostTrusted(url: url.URL): boolean {
 
 export const Targets = new Set([
   'win32-x64',
-  'win32-ia32',
   'win32-arm64',
   'linux-x64',
   'linux-arm64',
@@ -329,7 +328,10 @@ export const Targets = new Set([
 ])
 
 class ManifestProcessor extends BaseProcessor {
-  constructor(manifest: Manifest, private readonly options: IPackageOptions = {}) {
+  constructor(
+    manifest: Manifest,
+    private readonly options: IPackageOptions = {},
+  ) {
     super(manifest)
 
     const flags = ['Public']
@@ -709,7 +711,7 @@ class MarkdownProcessor extends BaseProcessor {
 
           if (ownerAndRepositoryName) {
             // prettier-ignore
-            [owner, repositoryName] = ownerAndRepositoryName.split('/', 2)
+            ;[owner, repositoryName] = ownerAndRepositoryName.split('/', 2)
           }
 
           if (owner && repositoryName && issueNumber) {
@@ -980,8 +982,8 @@ function getExtensionKind(manifest: Manifest): ExtensionKind[] {
     const result: ExtensionKind[] = Array.isArray(manifest.extensionKind)
       ? manifest.extensionKind
       : manifest.extensionKind === 'ui'
-      ? ['ui', 'workspace']
-      : [manifest.extensionKind]
+        ? ['ui', 'workspace']
+        : [manifest.extensionKind]
 
     // Add web kind if the extension can run as web extension
     if (deduced.includes('web') && !result.includes('web')) {
@@ -1127,8 +1129,8 @@ async function toVsixManifest(vsix: VSIX): Promise<string> {
 	<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 		<Metadata>
 			<Identity Language="en-US" Id="${escape(vsix.id)}" Version="${escape(vsix.version)}" Publisher="${escape(
-    vsix.publisher,
-  )}" ${vsix.target ? `TargetPlatform="${escape(vsix.target)}"` : ''}/>
+        vsix.publisher,
+      )}" ${vsix.target ? `TargetPlatform="${escape(vsix.target)}"` : ''}/>
 			<DisplayName>${escape(vsix.displayName)}</DisplayName>
 			<Description xml:space="preserve">${escape(vsix.description)}</Description>
 			<Tags>${escape(vsix.tags)}</Tags>
