@@ -1,5 +1,11 @@
 # panda-css-vscode
 
+## 0.3.1
+
+### Patch Changes
+
+- 976f7a5: Fix the CI build output
+
 ## 0.3.0
 
 ### Minor Changes
