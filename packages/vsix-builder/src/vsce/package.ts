@@ -711,7 +711,7 @@ class MarkdownProcessor extends BaseProcessor {
 
           if (ownerAndRepositoryName) {
             // prettier-ignore
-            ;[owner, repositoryName] = ownerAndRepositoryName.split('/', 2)
+            [owner, repositoryName] = ownerAndRepositoryName.split('/', 2)
           }
 
           if (owner && repositoryName && issueNumber) {
