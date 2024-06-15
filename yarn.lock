@@ -1732,7 +1732,7 @@ __metadata:
     prettier: "npm:^3.2.5"
     satori: "npm:^0.10.13"
     ts-morph: "npm:21.0.1"
-    ts-pattern: "npm:5.0.8"
+    ts-pattern: "npm:5.2.0"
     tsup: "npm:8.0.2"
     typescript: "npm:^5.4.2"
     utf8: "npm:^3.0.0"
@@ -11032,6 +11032,13 @@ __metadata:
   version: 5.0.8
   resolution: "ts-pattern@npm:5.0.8"
   checksum: c0767f4a4ce960cc87e69274f750d4672e37e865b779f8aed472fb22566baaedd584caf7dfd454905c25138aabe88f3abb5c2351487b223e822a3affae9611eb
+  languageName: node
+  linkType: hard
+
+"ts-pattern@npm:5.2.0":
+  version: 5.2.0
+  resolution: "ts-pattern@npm:5.2.0"
+  checksum: 99d0bc0d2f3aa19d8ff50b028f4e1c3da35b21f4503f329f8818863b614df3850c0b3709c703e18f5902e68b9682d29719c82b709e07907e87e374e5c70a01f5
   languageName: node
   linkType: hard
 
