@@ -1721,7 +1721,7 @@ __metadata:
     "@pandacss/token-dictionary": "npm:^0.37.2"
     "@pandacss/types": "npm:^0.37.2"
     "@types/base-64": "npm:^1.0.2"
-    "@types/node": "npm:20.11.30"
+    "@types/node": "npm:20.14.9"
     "@types/prettier": "npm:3.0.0"
     "@types/utf8": "npm:^3.0.3"
     base-64: "npm:^1.0.0"
@@ -3147,12 +3147,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.11.30":
+"@types/node@npm:*":
   version: 20.11.30
   resolution: "@types/node@npm:20.11.30"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 867cfaf969c6d8850d8d7304e7ab739898a50ecb1395b61ff2335644f5f48d7a46fbc4a14cee967aed65ec134b61a746edae70d1f32f11321ccf29165e3bc4e6
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.14.9":
+  version: 20.14.9
+  resolution: "@types/node@npm:20.14.9"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 911ffa444dc032897f4a23ed580c67903bd38ea1c5ec99b1d00fa10b83537a3adddef8e1f29710cbdd8e556a61407ed008e06537d834e48caf449ce59f87d387
   languageName: node
   linkType: hard
 
@@ -9023,7 +9032,7 @@ __metadata:
     "@pnpm/find-workspace-dir": "npm:^6.0.3"
     "@pnpm/find-workspace-packages": "npm:^6.0.9"
     "@pnpm/types": "npm:^9.4.2"
-    "@types/node": "npm:20.11.30"
+    "@types/node": "npm:20.14.9"
     "@types/semver": "npm:^7.5.8"
     "@types/vscode": "npm:^1.87.0"
     "@vscode/vsce": "npm:^2.24.0"
@@ -9050,7 +9059,7 @@ __metadata:
     "@changesets/changelog-github": "npm:0.5.0"
     "@changesets/cli": "npm:2.27.1"
     "@types/eslint": "npm:^8.56.6"
-    "@types/node": "npm:20.11.30"
+    "@types/node": "npm:20.14.9"
     "@typescript-eslint/eslint-plugin": "npm:7.3.1"
     "@typescript-eslint/parser": "npm:7.3.1"
     eslint: "npm:^8.57.0"
