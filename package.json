@@ -27,7 +27,7 @@
     "prettier": "^3.2.5",
     "tsup": "8.0.2",
     "typescript": "5.4.2",
-    "vitest": "1.4.0"
+    "vitest": "1.6.1"
   },
   "resolutions": {
     "panda-css-vscode/esbuild": "npm:esbuild-wasm@0.17.18",
