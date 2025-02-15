@@ -1721,7 +1721,7 @@ __metadata:
     "@pandacss/token-dictionary": "npm:^0.37.2"
     "@pandacss/types": "npm:^0.37.2"
     "@types/base-64": "npm:^1.0.2"
-    "@types/node": "npm:20.11.30"
+    "@types/node": "npm:20.17.19"
     "@types/prettier": "npm:3.0.0"
     "@types/utf8": "npm:^3.0.3"
     base-64: "npm:^1.0.0"
@@ -3147,12 +3147,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.11.30":
+"@types/node@npm:*":
   version: 20.11.30
   resolution: "@types/node@npm:20.11.30"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 867cfaf969c6d8850d8d7304e7ab739898a50ecb1395b61ff2335644f5f48d7a46fbc4a14cee967aed65ec134b61a746edae70d1f32f11321ccf29165e3bc4e6
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.17.19":
+  version: 20.17.19
+  resolution: "@types/node@npm:20.17.19"
+  dependencies:
+    undici-types: "npm:~6.19.2"
+  checksum: 930e554eadeb0c2848f9225007ef66ea9c7fe987c80e2f2c1a9f316b297036d4054bbc5459b67051cf32cd360a022344c2998dcb1ec7579109f631b6d5f21bf8
   languageName: node
   linkType: hard
 
@@ -9023,7 +9032,7 @@ __metadata:
     "@pnpm/find-workspace-dir": "npm:^6.0.3"
     "@pnpm/find-workspace-packages": "npm:^6.0.9"
     "@pnpm/types": "npm:^9.4.2"
-    "@types/node": "npm:20.11.30"
+    "@types/node": "npm:20.17.19"
     "@types/semver": "npm:^7.5.8"
     "@types/vscode": "npm:^1.87.0"
     "@vscode/vsce": "npm:^2.24.0"
@@ -9050,7 +9059,7 @@ __metadata:
     "@changesets/changelog-github": "npm:0.5.0"
     "@changesets/cli": "npm:2.27.1"
     "@types/eslint": "npm:^8.56.6"
-    "@types/node": "npm:20.11.30"
+    "@types/node": "npm:20.17.19"
     "@typescript-eslint/eslint-plugin": "npm:7.3.1"
     "@typescript-eslint/parser": "npm:7.3.1"
     eslint: "npm:^8.57.0"
@@ -11395,6 +11404,13 @@ __metadata:
   version: 5.26.5
   resolution: "undici-types@npm:5.26.5"
   checksum: bb673d7876c2d411b6eb6c560e0c571eef4a01c1c19925175d16e3a30c4c428181fb8d7ae802a261f283e4166a0ac435e2f505743aa9e45d893f9a3df017b501
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.19.2":
+  version: 6.19.8
+  resolution: "undici-types@npm:6.19.8"
+  checksum: 078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
   languageName: node
   linkType: hard
 
