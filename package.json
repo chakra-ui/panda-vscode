@@ -21,7 +21,7 @@
   "dependencies": {
     "@changesets/changelog-github": "0.5.0",
     "@changesets/cli": "2.27.1",
-    "@types/node": "20.11.30",
+    "@types/node": "20.17.19",
     "@typescript-eslint/eslint-plugin": "7.3.1",
     "@typescript-eslint/parser": "7.3.1",
     "prettier": "^3.2.5",

@@ -24,7 +24,7 @@
   "devDependencies": {
     "@pandacss/extension-shared": "workspace:*",
     "@types/base-64": "^1.0.2",
-    "@types/node": "20.11.30",
+    "@types/node": "20.17.19",
     "@types/prettier": "3.0.0",
     "@types/utf8": "^3.0.3",
     "base-64": "^1.0.0",
