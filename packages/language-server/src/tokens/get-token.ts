@@ -14,11 +14,37 @@ const getColorExtensions = (value: string, kind: string) => {
 export const getTokenFromPropValue = (ctx: PandaContext, prop: string, value: string): Token | undefined => {
   const utility = ctx.config.utilities?.[prop]
 
-  const category = typeof utility?.values === 'string' && utility?.values
-  if (!category) return
+  const potentialCategories: string[] = []
 
-  const tokenPath = [category, value].join('.')
-  const token = ctx.tokens.getByName(tokenPath)
+  if (typeof utility?.values === 'string' && utility?.values) {
+    potentialCategories.push(utility?.values)
+  }
+
+  if (typeof utility?.values === 'function' && ctx.config.theme) {
+    // Invoke the utility value function and capture categories potentially used by consumer
+    utility.values((token: string) => {
+      potentialCategories.push(token)
+    })
+  }
+
+  if (!potentialCategories.length) return
+
+  // Attempt to locate a token
+  const matchedToken = potentialCategories
+    .map((category) => {
+      return [category, value].join('.')
+    })
+    .map((tokenPath) => {
+      return {
+        token: ctx.tokens.getByName(tokenPath),
+        tokenPath,
+      }
+    })
+    .find((t) => t.token !== undefined)
+
+  const token = matchedToken?.token
+  // If token was located use the first category and value
+  const tokenPath = matchedToken?.tokenPath ?? [potentialCategories[0], value].join('.')
 
   // arbitrary value like
   // display: "block", zIndex: 1, ...

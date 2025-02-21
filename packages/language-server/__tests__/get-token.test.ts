@@ -14,7 +14,27 @@ test('zIndex: 1', () => {
 
 test('margin: 2', () => {
   const ctx = createContext()
-  expect(getTokenFromPropValue(ctx, 'margin', '2')).toMatchInlineSnapshot(`undefined`)
+  expect(getTokenFromPropValue(ctx, 'margin', '2')).toMatchInlineSnapshot(`
+    _Token {
+      "description": undefined,
+      "extensions": {
+        "category": "spacing",
+        "condition": "base",
+        "pixelValue": "8px",
+        "prop": "2",
+        "var": "--spacing-2",
+        "varRef": "var(--spacing-2)",
+      },
+      "name": "spacing.2",
+      "originalValue": "0.5rem",
+      "path": [
+        "spacing",
+        "2",
+      ],
+      "type": "dimension",
+      "value": "0.5rem",
+    }
+  `)
 })
 
 test('CSS var', () => {
@@ -165,6 +185,31 @@ test('color: #fff', () => {
       "path": "colors.#fff",
       "type": "color",
       "value": "#fff",
+    }
+  `)
+})
+
+test('width: xs', () => {
+  const ctx = createContext()
+  expect(getTokenFromPropValue(ctx, 'width', 'xs')).toMatchInlineSnapshot(`
+    _Token {
+      "description": undefined,
+      "extensions": {
+        "category": "sizes",
+        "condition": "base",
+        "pixelValue": "320px",
+        "prop": "xs",
+        "var": "--sizes-xs",
+        "varRef": "var(--sizes-xs)",
+      },
+      "name": "sizes.xs",
+      "originalValue": "20rem",
+      "path": [
+        "sizes",
+        "xs",
+      ],
+      "type": undefined,
+      "value": "20rem",
     }
   `)
 })
