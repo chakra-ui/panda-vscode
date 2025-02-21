@@ -57,48 +57,48 @@ test('token reference with curly braces', () => {
   `)
 })
 
-// test('composite value with token reference with token()', () => {
-//   const ctx = createContext()
-//   expect(getTokenFromPropValue(ctx, 'border', '1px solid {colors.gray.300}')).toMatchInlineSnapshot(`
-//     _Token {
-//       "description": undefined,
-//       "extensions": {
-//         "category": "colors",
-//         "colorPalette": "gray",
-//         "colorPaletteRoots": [
-//           [
-//             "gray",
-//           ],
-//         ],
-//         "colorPaletteTokenKeys": [
-//           [
-//             "300",
-//           ],
-//         ],
-//         "condition": "base",
-//         "kind": "semantic-color",
-//         "prop": "gray.300",
-//         "var": "--colors-gray-300",
-//         "varRef": "var(--colors-gray-300)",
-//         "vscodeColor": {
-//           "alpha": 1,
-//           "blue": 0.8588235294117647,
-//           "green": 0.8352941176470589,
-//           "red": 0.8196078431372549,
-//         },
-//       },
-//       "name": "colors.gray.300",
-//       "originalValue": "#d1d5db",
-//       "path": [
-//         "colors",
-//         "gray",
-//         "300",
-//       ],
-//       "type": "color",
-//       "value": "#d1d5db",
-//     }
-//   `)
-// })
+test('composite value with token reference with token()', () => {
+  const ctx = createContext()
+  expect(getTokenFromPropValue(ctx, 'border', '1px solid {colors.gray.300}')).toMatchInlineSnapshot(`
+    _Token {
+      "description": undefined,
+      "extensions": {
+        "category": "colors",
+        "colorPalette": "gray",
+        "colorPaletteRoots": [
+          [
+            "gray",
+          ],
+        ],
+        "colorPaletteTokenKeys": [
+          [
+            "300",
+          ],
+        ],
+        "condition": "base",
+        "kind": "semantic-color",
+        "prop": "gray.300",
+        "var": "--colors-gray-300",
+        "varRef": "var(--colors-gray-300)",
+        "vscodeColor": {
+          "alpha": 1,
+          "blue": 0.8588235294117647,
+          "green": 0.8352941176470589,
+          "red": 0.8196078431372549,
+        },
+      },
+      "name": "colors.gray.300",
+      "originalValue": "#d1d5db",
+      "path": [
+        "colors",
+        "gray",
+        "300",
+      ],
+      "type": "color",
+      "value": "#d1d5db",
+    }
+  `)
+})
 
 test('token reference with token()', () => {
   const ctx = createContext()
