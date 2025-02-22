@@ -151,13 +151,28 @@ export const getCompletionFor = ({
       category = utility.values
     } else if (typeof utility.values === 'function') {
       // values: (theme) => { ...theme("spacing") }
-      const record = ctx.utility.getPropertyValues(utility, (cat) => {
-        category = cat
-        return cat
+      const record = ctx.utility.getPropertyValues(utility, (key) => {
+        return `types:Tokens["${key}"]`
       })
       if (record) {
-        if (record.type) category = record.type as string
-        else propValues = record as Record<string, string>
+        if (record.type) {
+          category = record.type as string
+        } else {
+          const newRecord: Record<string, string> = {}
+          // itterate through record keys and extract sub values if they are present
+          Object.entries(record as Record<string, string | {}>).forEach(([name, value]) => {
+            if (typeof value === 'string') {
+              newRecord[name] = value
+              return
+            }
+            // flatten token
+            Object.entries(value as Record<string, string>).forEach(([subName, subValue]) => {
+              newRecord[subName] = subValue
+            })
+            return
+          })
+          propValues = newRecord
+        }
       }
     }
   }
