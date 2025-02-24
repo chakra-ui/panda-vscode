@@ -504,3 +504,257 @@ test('display: block', () => {
     ]
   `)
 })
+
+test('width: xl', () => {
+  const ctx = createContext()
+  expect(getCompletionFor({ ctx, propName: 'width', propValue: 'x', settings: {} })).toMatchInlineSnapshot(`
+    [
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": _Token {
+            "deprecated": undefined,
+            "description": undefined,
+            "extensions": {
+              "category": "sizes",
+              "condition": "base",
+              "pixelValue": "320px",
+              "prop": "xs",
+              "var": "--sizes-xs",
+              "varRef": "var(--sizes-xs)",
+            },
+            "name": "sizes.xs",
+            "originalValue": "20rem",
+            "path": [
+              "sizes",
+              "xs",
+            ],
+            "type": undefined,
+            "value": "20rem",
+          },
+        },
+        "kind": 20,
+        "label": "xs",
+        "preselect": false,
+        "sortText": "-xs",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": undefined,
+        },
+        "kind": 20,
+        "label": "xl",
+        "preselect": false,
+        "sortText": "-xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": _Token {
+            "deprecated": undefined,
+            "description": undefined,
+            "extensions": {
+              "category": "sizes",
+              "condition": "base",
+              "pixelValue": "672px",
+              "prop": "2xl",
+              "var": "--sizes-2xl",
+              "varRef": "var(--sizes-2xl)",
+            },
+            "name": "sizes.2xl",
+            "originalValue": "42rem",
+            "path": [
+              "sizes",
+              "2xl",
+            ],
+            "type": undefined,
+            "value": "42rem",
+          },
+        },
+        "kind": 20,
+        "label": "2xl",
+        "preselect": false,
+        "sortText": "-0000000000002xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": undefined,
+        },
+        "kind": 20,
+        "label": "3xl",
+        "preselect": false,
+        "sortText": "-0000000000003xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": _Token {
+            "deprecated": undefined,
+            "description": undefined,
+            "extensions": {
+              "category": "sizes",
+              "condition": "base",
+              "pixelValue": "896px",
+              "prop": "4xl",
+              "var": "--sizes-4xl",
+              "varRef": "var(--sizes-4xl)",
+            },
+            "name": "sizes.4xl",
+            "originalValue": "56rem",
+            "path": [
+              "sizes",
+              "4xl",
+            ],
+            "type": undefined,
+            "value": "56rem",
+          },
+        },
+        "kind": 20,
+        "label": "4xl",
+        "preselect": false,
+        "sortText": "-0000000000004xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": undefined,
+        },
+        "kind": 20,
+        "label": "5xl",
+        "preselect": false,
+        "sortText": "-0000000000005xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": _Token {
+            "deprecated": undefined,
+            "description": undefined,
+            "extensions": {
+              "category": "sizes",
+              "condition": "base",
+              "pixelValue": "1152px",
+              "prop": "6xl",
+              "var": "--sizes-6xl",
+              "varRef": "var(--sizes-6xl)",
+            },
+            "name": "sizes.6xl",
+            "originalValue": "72rem",
+            "path": [
+              "sizes",
+              "6xl",
+            ],
+            "type": undefined,
+            "value": "72rem",
+          },
+        },
+        "kind": 20,
+        "label": "6xl",
+        "preselect": false,
+        "sortText": "-0000000000006xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": undefined,
+        },
+        "kind": 20,
+        "label": "7xl",
+        "preselect": false,
+        "sortText": "-0000000000007xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": _Token {
+            "deprecated": undefined,
+            "description": undefined,
+            "extensions": {
+              "category": "sizes",
+              "condition": "base",
+              "pixelValue": "1440px",
+              "prop": "8xl",
+              "var": "--sizes-8xl",
+              "varRef": "var(--sizes-8xl)",
+            },
+            "name": "sizes.8xl",
+            "originalValue": "90rem",
+            "path": [
+              "sizes",
+              "8xl",
+            ],
+            "type": undefined,
+            "value": "90rem",
+          },
+        },
+        "kind": 20,
+        "label": "8xl",
+        "preselect": false,
+        "sortText": "-0000000000008xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": undefined,
+        },
+        "kind": 20,
+        "label": "max",
+        "preselect": false,
+        "sortText": "-max",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": _Token {
+            "deprecated": undefined,
+            "description": undefined,
+            "extensions": {
+              "category": "sizes",
+              "condition": "base",
+              "pixelValue": "1280px",
+              "prop": "breakpoint-xl",
+              "var": "--sizes-breakpoint-xl",
+              "varRef": "var(--sizes-breakpoint-xl)",
+            },
+            "name": "sizes.breakpoint-xl",
+            "originalValue": "1280px",
+            "path": [
+              "sizes",
+              "breakpoint-xl",
+            ],
+            "type": undefined,
+            "value": "1280px",
+          },
+        },
+        "kind": 20,
+        "label": "breakpoint-xl",
+        "preselect": false,
+        "sortText": "-breakpoint-xl",
+      },
+      {
+        "data": {
+          "propName": "width",
+          "shorthand": undefined,
+          "token": undefined,
+        },
+        "kind": 20,
+        "label": "breakpoint-2xl",
+        "preselect": false,
+        "sortText": "-breakpoint1000000000002xl",
+      },
+    ]
+  `)
+})
