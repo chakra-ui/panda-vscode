@@ -4,6 +4,15 @@ import { color2kToVsCodeColor } from './color2k-to-vscode-color'
 import { isColor } from './is-color'
 import { getTokensInString, hasTokenRef } from './expand-token-fn'
 
+const ESCAPE_HATCHED = /^(\[)(.*)(\])$/
+
+const removeEscapeHatch = (value: string) => {
+  if (ESCAPE_HATCHED.test(value)) {
+    return value.match(ESCAPE_HATCHED)?.[2] as string
+  }
+  return value
+}
+
 const getColorExtensions = (value: string, kind: string) => {
   const vscodeColor = color2kToVsCodeColor(value)
   if (!vscodeColor) return
@@ -43,12 +52,15 @@ export const getTokenFromPropValue = (ctx: PandaContext, prop: string, value: st
     .find((t) => t.token !== undefined)
 
   const token = matchedToken?.token
-  // If token was located use the first category and value
-  const tokenPath = matchedToken?.tokenPath ?? [potentialCategories[0], value].join('.')
 
   // arbitrary value like
   // display: "block", zIndex: 1, ...
   if (!token) {
+    // remove escape hatch if found
+    value = removeEscapeHatch(value)
+    // Use the first category for the token path
+    const tokenPath = [potentialCategories[0], value].join('.')
+
     // any color
     // color: "blue", color: "#000", color: "rgb(0, 0, 0)", ...
     if (isColor(value)) {
@@ -96,7 +108,7 @@ export const getTokenFromPropValue = (ctx: PandaContext, prop: string, value: st
 
   let color = token.value
   // could be a semantic token, so the token.value wouldn't be a color directly, it's actually a CSS variable
-  if (!isColor(color) && typeof token.value === "string" && token.value.startsWith('var(--')) {
+  if (!isColor(color) && typeof token.value === 'string' && token.value.startsWith('var(--')) {
     const [tokenRef] = ctx.tokens.getReferences(token.originalValue)
     if (tokenRef?.value) {
       color = tokenRef.value

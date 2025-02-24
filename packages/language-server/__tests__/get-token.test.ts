@@ -45,14 +45,42 @@ test('CSS var', () => {
 test('token reference with curly braces', () => {
   const ctx = createContext()
   expect(getTokenFromPropValue(ctx, 'border', '{colors.gray.300}')).toMatchInlineSnapshot(`
-    {
+    _Token {
+      "description": undefined,
       "extensions": {
-        "kind": "invalid-token-path",
+        "category": "colors",
+        "colorPalette": "gray",
+        "colorPaletteRoots": [
+          [
+            "gray",
+          ],
+        ],
+        "colorPaletteTokenKeys": [
+          [
+            "300",
+          ],
+        ],
+        "condition": "base",
+        "kind": "semantic-color",
+        "prop": "gray.300",
+        "var": "--colors-gray-300",
+        "varRef": "var(--colors-gray-300)",
+        "vscodeColor": {
+          "alpha": 1,
+          "blue": 0.8588235294117647,
+          "green": 0.8352941176470589,
+          "red": 0.8196078431372549,
+        },
       },
-      "name": "{colors.gray.300}",
-      "path": "borders.{colors.gray.300}",
+      "name": "colors.gray.300",
+      "originalValue": "#d1d5db",
+      "path": [
+        "colors",
+        "gray",
+        "300",
+      ],
       "type": "color",
-      "value": "{colors.gray.300}",
+      "value": "#d1d5db",
     }
   `)
 })
@@ -171,6 +199,27 @@ test('fontSize: xl', () => {
 test('color: #fff', () => {
   const ctx = createContext()
   expect(getTokenFromPropValue(ctx, 'color', '#fff')).toMatchInlineSnapshot(`
+    {
+      "extensions": {
+        "kind": "native-color",
+        "vscodeColor": {
+          "alpha": 1,
+          "blue": 1,
+          "green": 1,
+          "red": 1,
+        },
+      },
+      "name": "#fff",
+      "path": "colors.#fff",
+      "type": "color",
+      "value": "#fff",
+    }
+  `)
+})
+
+test('color: [#fff]', () => {
+  const ctx = createContext()
+  expect(getTokenFromPropValue(ctx, 'color', '[#fff]')).toMatchInlineSnapshot(`
     {
       "extensions": {
         "kind": "native-color",

@@ -11,8 +11,8 @@ import type { Token } from '@pandacss/token-dictionary'
 /**
  * Regex for matching a tokenized reference.
  */
-const REFERENCE_REGEX = /({([^}]*)})/g
-const curlyBracketRegex = /[{}]/g
+const REFERENCE_REGEX = /({([^}]*)})/
+const curlyBracketRegex = /[{}]/
 
 /**
  * Returns all references in a string
