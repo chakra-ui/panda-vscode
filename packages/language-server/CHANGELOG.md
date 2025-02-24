@@ -1,5 +1,13 @@
 # @pandacss/language-server
 
+## 0.19.0
+
+### Minor Changes
+
+- 101ba76: improved token parsing for utilities
+- 01496c6: handle escape hatched colors
+- af8cf9c: auto complete utilities with complex tokens
+
 ## 0.18.0
 
 ### Minor Changes
