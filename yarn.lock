@@ -1910,7 +1910,7 @@ __metadata:
     typescript: "npm:^5.2.2"
     url-join: "npm:^5.0.0"
     xml2js: "npm:^0.6.2"
-    yauzl: "npm:^2.10.0"
+    yauzl: "npm:^3.0.0"
     yazl: "npm:^2.5.1"
   bin:
     vsix-builder: bin.js
@@ -12095,13 +12095,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yauzl@npm:^2.10.0, yauzl@npm:^2.3.1":
+"yauzl@npm:^2.3.1":
   version: 2.10.0
   resolution: "yauzl@npm:2.10.0"
   dependencies:
     buffer-crc32: "npm:~0.2.3"
     fd-slicer: "npm:~1.1.0"
   checksum: f265002af7541b9ec3589a27f5fb8f11cf348b53cc15e2751272e3c062cd73f3e715bc72d43257de71bbaecae446c3f1b14af7559e8ab0261625375541816422
+  languageName: node
+  linkType: hard
+
+"yauzl@npm:^3.0.0":
+  version: 3.2.1
+  resolution: "yauzl@npm:3.2.1"
+  dependencies:
+    buffer-crc32: "npm:~0.2.3"
+    pend: "npm:~1.2.0"
+  checksum: fe1997a8ee53c42556789ca61a28278e9ea2ca8f68cae1ae9904edaf3b5fbbc5d5537a3fb8623ac82c2bd0bd9d67233ce593f1acaadfb8718489d9f06d1bb3d0
   languageName: node
   linkType: hard
 
