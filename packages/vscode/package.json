@@ -209,7 +209,7 @@
     "@pandacss/preset-base": "^0.37.2",
     "@pandacss/preset-panda": "^0.37.2",
     "@pandacss/ts-plugin": "workspace:^",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.25.0",
     "pathe": "1.1.2"
   },
   "bundledDependencies": [
